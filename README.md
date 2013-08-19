@@ -17,11 +17,12 @@ mechanism was introduced alongside with the extension of the character set. To u
 Characters, imagine the same had happened to ASCII—an 8bit character set that leaves all codepoints using
 the 8<sup>th</sup> bit undefined. We could go and make those 128 codepoints surrogate characters,
 stipulating that the 64 codepoints in the range  `0x80`...`0xbf` shall serve as 'High (or Leading)
-Surrogates', those in the range `0xc0`...`0xff` as 'High (or Trailing) Surrogates', and that High and Low
-Surrogates shall always appear as pairs. In essence, then, every pair `HL` then represents a number written
-out in a positional system with the base 64, that is, we can project it onto codepoints beyond `0xff` (255)
-by saying that a surrogate pair `HL` is a way to access codepoint `( H — 0x80 ) * 64 + ( L — 0xc0 ) +
-255`, allowing us to express around 4000 additional codepoints within an 8bit character set!
+Surrogates', those in the range `0xc0`...`0xff` as 'Low (or Trailing) Surrogates', and that High and Low
+Surrogates shall always appear as pairs. In essence, then, every aurrogate pair `HL` then represents a
+number written out in a positional system with the base 64, that is, we can project it onto codepoints
+beyond `0xff` (255) by saying that a surrogate pair `HL` is a way to access codepoint `( H — 0x80 ) * 64 + (
+L — 0xc0 ) + 255`, allowing us to express around 4000 additional codepoints in the range `0x100`...`0x10fe`
+from within the confines of an 8bit character set!
 
 Of course, such a move would have **broken a lot of assumptions**, such as the Olde Saw that 'a character is
 a codepoint, a codepoint is a byte', a truism in all early encoding schemes. In Unicode, a 'character' (a
@@ -32,7 +33,11 @@ Further, only 256 Unicode codepoints are representable within a 'byte'—a scant
 codepoints in use as of Unicode 6. Understanding the codepoint / character / byte schism is essential for
 any programmer wanting to process text.
 
-
+Now JavaScript *was* fairly advanced for its time in that its text data type—the `String`—was defined in
+terms of Unicode characters at a time when the programming community at large was still happily hacking
+bytes, and web designers spit out HTML pages using ISO&nbsp;8859-1 (by comparison, Python, which was
+conceived in 1991, got a Unicode data type only in 2000, and abolished its 8bit string type in 2008—until
+then, most programmers operated on bytes rather than codepoints when manipulating text in that language).
 
 2<sup>32</sup>
 
