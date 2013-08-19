@@ -189,8 +189,8 @@ Range SiGil (RSG). Last, the CID is written out in lowercase hexadecimal. The pa
 by hyphens `-`. Here are a few examples:
 
     ਵ      u-guru-a35      # guru:  (ISO code for) 'Gurmukhi'
-    強      u-cjk-5f37      # cjk:   Unicode block 'CJK Unified Ideographs'
-    𤕣      u-cjkxb-24563   # cjkxb: Unicode block 'CJK Ideograph Extension B'
+    強     u-cjk-5f37      # cjk:   Unicode block 'CJK Unified Ideographs'
+    𤕣     u-cjkxb-24563   # cjkxb: Unicode block 'CJK Ideograph Extension B'
     €      u-cur-20ac      # cur:   Unicode block 'Currency Symbols'
 
 RSGs are important for big character sets such as Unicode, where tens of thousands of characters are
@@ -198,7 +198,9 @@ distributed over hundred of blocks—it is easy to loose orientation. Since FNCR
 sigil, codepoints from multiple character sets may be identified; for example, here we use `l9` to stand for
 Latin-9, otherwise known as ISO 8859-15, and `w1252` for Windows Codepage 1252:
 
-    €      u-cur-20ac = l9-a4 = w1252-80
+    €      u-cur-20ac
+         = l9-a4
+         = w1252-80
 
 
 
