@@ -160,14 +160,13 @@ Bits            Byte 1  Byte 2  Byte 3  Byte 4
 
 
 
-Bits of    | bird    |dog | bird |dog | bird |dog | bird
-codepoint  | bird    |dog | bird |dog | bird |dog | bird
-           | bird    |dog | bird |dog | bird |dog | bird
------------|---------|----|------|----|------|----|------
-&nbsp;7    | 0x00000 |foo | foo  |foo | foo  |foo | foo
-11         | 0x00080 |bar | bar  |bar | bar  |bar | bar
-16         | 0x00800 |baz | baz  |baz | baz  |baz | baz
-21         | 0x10000 |baz | baz  |baz | baz  |baz | baz
+Bits of    | from      | to        | bird |dog | bird |dog | bird
+codepoint  | codepoint | codepoint | bird |dog | bird |dog | bird
+-----------|-----------|-----------|------|----|------|----|------
+&nbsp;7    | 0x00000   | 0x00007f  | foo  |foo | foo  |foo | foo
+11         | 0x00080   | 0x0007ff  | bar  |bar | bar  |bar | bar
+16         | 0x00800   | 0x00ffff  | baz  |baz | baz  |baz | baz
+21         | 0x10000   | 0x1fffff  | baz  |baz | baz  |baz | baz
 
 
 
