@@ -1,0 +1,38 @@
+{
+  "name": "coffeenode-chr",
+  "version": "0.1.0",
+  "description": "A Unicode UCS-2-aware library for the representation & transformation of characters & codepoints.",
+  "author": {
+    "name": "loveencounterflow",
+    "email": "paragate@gmx.net"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loveencounterflow/coffeenode-chr.git"
+  },
+  "devDependencies": {
+    "coffeenode-trm": "~0.1.6"
+  },
+  "dependencies": {
+    "coffee-script": "~1.6.2",
+    "coffeenode-types": "~0.1.0"
+  },
+  "larq": {
+    "extensions": {
+      ".coffee": "coffee-script"
+    },
+    "compile-statements": {},
+    "%cache": {
+      "routes": {
+        "lib/main.js": 1
+      }
+    }
+  },
+  "main": "./lib/main",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "bugs": {
+    "url": "https://github.com/loveencounterflow/coffeenode-tex/issues"
+  }
+}
