@@ -150,7 +150,7 @@ is that
 ## Character Representations
 
 It is often necessary to convert between different character representations. For example,
-the text `𤕣古文龜` may be rendered as `&amp;#x24563;`
+the text `𤕣古文龜` may be rendered as `&#x24563;`
 
 
 
