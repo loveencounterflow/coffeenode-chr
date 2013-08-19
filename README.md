@@ -158,8 +158,13 @@ notation, e.g. `U+5F37;`.
 
 The Numeric(al) Character Representation (NCR) format was invented to represent 'difficult' characters in
 SGML, a markup format designed in 1960s which became the ancestor of both XML and HTML. An NCR consists of
-an ampersand&nbsp;`&` followed by a hash&nbsp;`#`, followed by the numerical codepoint identifier (CID, otherwise
-known as simple 'a codepoint') of the character in question, and closed with a semicolon&nbsp;`;`.
+an ampersand&nbsp;`&` followed by a hash&nbsp;`#`, followed by the numerical codepoint identifier (CID,
+otherwise known as simple 'a codepoint') of the character in question, and closed with a semicolon&nbsp;`;`.
+The CID may be written out in decimal or hexadecimal, upper- or lowercase, and with optional leading zeros.
+If written in hexadecimal, an `x` must be placed between the hash&nbsp;`#` and the CID: thus, `ਵ`, named
+GURMUKHI LETTER VA, may be represented as `&#x0A35;`, `&#xA35;`, `&#x0a35;`, `&#2613;`, `&#02613;`. (The
+flexibility of these rules and the plethora of possible variants is somewhat of a hallmark of earlier
+computing standards; other examples for this phenomenon are email- and IP-addresses.)
 
 ### Unicode Character Representation (UCR)
 
@@ -167,9 +172,29 @@ The Unicode Consortium's Character Representation (UCR) format is used by the Un
 publications. It consists of an uppercase&nbsp;`U`, followed by a plus sign&nbsp;`+`, followed by the CID of
 the character in question. The CID is invariably written out in uppercase hexadecimal; it is padded with
 zeros when shorter than four digits; otherwise, it consists of five or six digits as needed. For example,
-`ਵ`, named GURMUKHI LETTER VA, is represented as `U+0A35`.
+`ਵ` is represented as `U+0A35`.
 
+### Proprietary Formats
 
+When having to reference and identify characters, i personally like to write out the codepoint in a fashion
+that is both somewhat less 'formal' than NCRs and somewhat more readyble, flexible and informative than
+UCRs; i call this format FNCR for Friendly Numeric Characer Representation. It is mainly intended for use
+in publications such as character references, where a notice should be made for the reader how to decode
+the constituent parts of the notation.
+
+The general format of an FNCR is as follows: first, the character set is indicated by a short string of
+letters, `u` being reserved for Unicode; this part is called the Character Set siGil (CSG). Then, the
+relevant subset or block of the position of the codepoint in the character set is identified by a so-called
+Range SiGil (RSG). Last, the CID is written out in lowercase hexadecimal. The parts of the FNCR are joined
+by hyphens `-`. Here are a few examples:
+
+    ਵ      u-guru-a35     # guru:  (ISO code for) 'Gurmukhi'
+    強     u-cjk-5f37      # cjk:   Unicode block 'CJK Unified Ideographs'
+    𤕣     u-cjkxb-24563   # cjkxb: Unicode block 'CJK Ideograph Extension B'
+    €     u-cur-20ac      # cur:   Unicode block 'Currency Symbols'
+
+RSGs are important for big character sets such as Unicode, where tens of thousands of characters are
+distributed over hundred of blocks.
 
 
 
