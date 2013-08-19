@@ -1,7 +1,7 @@
 
 ### Front matter
 
-The CoffeeNode `CHR` (short for 'character') is a library for handling characters within NodeJS in a
+The CoffeeNode `CHR` module (short for 'character') is a library for handling characters within NodeJS in a
 Unicode-compliant, Astral-Plane-aware fashion. It includes functions to split texts into characters,
 iterate over characters, and convert between a number of different character representations.
 
@@ -13,10 +13,10 @@ Install as
 
 Require as, e.g.
 
-    require
+    CHR = require 'coffeenode-chr'
+
 
 # Unicode characters & codepoints
-
 
 
 ## JavaScript & Unicode
@@ -177,7 +177,7 @@ zeros when shorter than four digits; otherwise, it consists of five or six digit
 ### Proprietary Formats
 
 When having to reference and identify characters, i personally like to write out the codepoint in a fashion
-that is both somewhat less 'formal' than NCRs and somewhat more readyble, flexible and informative than
+that is both somewhat less 'formal' than NCRs and somewhat more readable, flexible and informative than
 UCRs; i call this format FNCR for Friendly Numeric Characer Representation. It is mainly intended for use
 in publications such as character references, where a notice should be made for the reader how to decode
 the constituent parts of the notation.
@@ -202,5 +202,5 @@ Latin-9, otherwise known as ISO 8859-15, and `w1252` for Windows Codepage 1252:
          = l9-a4
          = w1252-80
 
-
+O
 
