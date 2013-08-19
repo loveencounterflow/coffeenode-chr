@@ -12,6 +12,13 @@ rpr                       = TRM.rpr.bind TRM
 # CONVERTING TO CID
 #-----------------------------------------------------------------------------------------------------------
 @cid_from_chr = ( chr, mode ) ->
+
+#-----------------------------------------------------------------------------------------------------------
+@csg_cid_from_chr = ( chr, mode ) ->
+  return ( @_csg_cid_from_chr chr, mode )[ 1 .. ]
+
+#-----------------------------------------------------------------------------------------------------------
+@_csg_cid_from_chr = ( chr, mode ) ->
   switch mode
     when 'plain'
       matcher = @first_chr_matcher
@@ -27,12 +34,20 @@ rpr                       = TRM.rpr.bind TRM
     when 0
       throw new Error "unable to obtain CID from empty string"
     when 1
-      return first_chr.charCodeAt 0
+      return [ first_chr, 'u', first_chr.charCodeAt 0 ]
     when 2
-      hi = first_chr.charCodeAt 0
-      lo = first_chr.charCodeAt 1
-      return ( hi - 0xD800 ) * 0x400 + ( lo - 0xDC00 ) + 0x10000
+      hi  = first_chr.charCodeAt 0
+      lo  = first_chr.charCodeAt 1
+      cid = ( hi - 0xD800 ) * 0x400 + ( lo - 0xDC00 ) + 0x10000
+      return [ first_chr, 'u', cid ]
     else
+      [ chr
+        csg
+        cid_hex
+        cid_dec ] = match
+      cid = if cid_hex? then parseInt cid_hex, 16 else parseInt cid_dec, 10
+      return [ first_chr, csg, cid ]
+
 
 #-----------------------------------------------------------------------------------------------------------
 @cid_from_ncr = ( ) ->
@@ -86,21 +101,21 @@ rpr                       = TRM.rpr.bind TRM
 # PATTERNS
 #-----------------------------------------------------------------------------------------------------------
 @ncr_kernel_matcher          = /// &               \# (?:     x   [a-f0-9]+     |   [0-9]+   ) ; ///
-@ncr_cid_matcher             = /// &               \# (?: (?: x ( [a-f0-9]+ ) ) | ( [0-9]+ ) ) ; ///
+@ncr_csg_cid_matcher         = /// & ()            \# (?: (?: x ( [a-f0-9]+ ) ) | ( [0-9]+ ) ) ; ///
 @ncr_splitter                = /// ( (?: #{@ncr_kernel_matcher.source} ) | (?: . ) ) ///
-@first_chr_matcher           = /// ^   (?: [\ud800-\udbff] . ) | . ///
-@first_chr_with_ncr_matcher  = /// ^ ( (?: [\ud800-\udbff] . )                   |
-                                                (?: #{@ncr_cid_matcher.source} ) |
-                                                (?: . )
-                                                ) ///
+@first_chr_matcher           = /// ^     (?: [\ud800-\udbff] . ) | . ///
+@first_chr_with_ncr_matcher  = /// ^ (?: (?: [\ud800-\udbff] . )              |
+                                         (?: #{@ncr_csg_cid_matcher.source} ) |
+                                         (?: . )
+                                         ) ///
 #...........................................................................................................
 @xncr_kernel_matcher         = /// &   [a-z0-9]*   \# (?:     x   [a-f0-9]+     |   [0-9]+   ) ; ///
 @xncr_csg_cid_matcher        = /// & ( [a-z0-9]* ) \# (?: (?: x ( [a-f0-9]+ ) ) | ( [0-9]+ ) ) ; ///
 @xncr_splitter               = /// ( (?: #{@xncr_kernel_matcher.source} ) | (?: . ) ) ///
-@first_chr_with_xncr_matcher = /// ^ ( (?: [\ud800-\udbff] . )                 |
-                                       (?: #{@xncr_csg_cid_matcher.source} )   |
-                                       (?: . )
-                                       ) ///
+@first_chr_with_xncr_matcher = /// ^ (?: (?: [\ud800-\udbff] . )                 |
+                                         (?: #{@xncr_csg_cid_matcher.source} )   |
+                                         (?: . )
+                                         ) ///
 
 
 
@@ -121,6 +136,9 @@ rainbow                   = TRM.rainbow.bind TRM
 # log '𤕣古文龜'.match @first_chr_matcher
 
 log '&jzr#x123;helo'.match @first_chr_with_xncr_matcher
+log '&jzr#123;helo'.match @first_chr_with_xncr_matcher
 log '&#x123;helo'.match @first_chr_with_xncr_matcher
+log '&#x123;helo'.match @first_chr_with_ncr_matcher
+log '&#123;helo'.match @first_chr_with_ncr_matcher
 
 
