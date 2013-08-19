@@ -1,6 +1,23 @@
 
+### Front matter
+
+The CoffeeNode `CHR` (short for 'character') is a library for handling characters within NodeJS in a
+Unicode-compliant, Astral-Plane-aware fashion. It includes functions to split texts into characters,
+iterate over characters, and convert between a number of different character representations.
+
+### Installation
+
+Install as
+
+    npm install coffeenode-chr
+
+Require as, e.g.
+
+    require
 
 # Unicode characters & codepoints
+
+
 
 ## JavaScript & Unicode
 
@@ -87,13 +104,13 @@ gives
 
 Like in an X-ray, we see that the string now holds *five* codepoints, in spite of there being only *four*
 characters, as in the previous one. The first two codepoints are rendered with the Unicode Replacement
-Character (which itself, confusingly, has a codepoint, `0xffd`), as they constitute, each by itself, *no
-legal codepoints*, as they must always appear side-by-side. The numbers shown—`0xd851` and `0xdd63`—indicate
-that JavaScript *can* deal with those positions, it just cannot print out a suitable glyph for them. In essence,
-all codepoints deemed illegal are mapped to `0xfffd` on their way through the output pipeline.
+Character (which itself—confusingly—has a codepoint, `0xffd`; in essence, all codepoints deemed illegal are
+mapped to `0xfffd` at some point on their way through the output pipeline), as they are *no legal
+codepoints* when occurring without a suitable partner.
 
-Indeed, when we apply the formula for
-Unicode Surrogate Pair conversion to the first two codepoints in the critical text:
+However, the numbers shown (`0xd851` and `0xdd63`) indicate that JavaScript *can* deal with those positions,
+it just cannot print out a suitable glyph for them. Indeed, when we apply the formula for Unicode Surrogate
+Pair conversion to the first two codepoints in the critical text:
 
     H = 0xd851
     L = 0xdd63
@@ -103,15 +120,52 @@ we find that the result `0x24563` does point to 𤕣 (an archaic variant of the 
 it becomes clear that JavaScript *can* deal with 'astral texts' (rendering it in what has become known as
 *mojibake* 文字化け or *krüsel-krüsel*)—provided that programmers do respect surrogates.
 
-This leaves code wranglers with a truly confusing situation: First, we had to swallow that **a byte is not
-a character** (anyone who spent their time between 2000 and 2010 trying to 'make everything work' in Python
-versions that had *both* an 8bit `str` type *and* a 16bit `Unicode` type will know whta i'm talking about).
-Next, we have to swallow that (in Java, in JavaScript, and in some versions of Python, depending on compilation
-flags) even **a single character may or may not be a single codepoint**.
-
-
+This leaves code wranglers with a truly confusing and sometimes frustrating situation: First, we had to
+swallow that **a byte is not a character** (anyone who spent their time between 2000 and 2010 trying to
+'make everything work' in Python versions that had *both* an 8bit `str` type *and* a 16bit `Unicode` type
+will know what i'm talking about). Next, we have to swallow that (in Java, in JavaScript, and in some
+versions of Python, depending on compilation flags) even **a single character may or may not be a single
+codepoint**; instead, **characters with codepoints above `0xffff` are represented as two 'Code Units'**, one
+more term to learn here.
 
 ## UTF-8 & CESU-8
+
+UTF-8 (an abbreviation for 'Unified Character Set Transformation Format, 8-bit') was invented in 1992 to
+solve the problem of transmitting and storing Unicode texts using the available octet-(byte-)based file and
+wire formats of the time. It has since become the undisputed standard encoding for web pages, URLs, and
+text files.
+
+Since codepoints are represented as positive integers, and octets (bytes) can be used to represent numbers
+between zero and 255, the problem that UTF-8 attempts to solve boils down to representing 'big' integers
+(those greater than 255) as series of octets.
+
+"Bits of
+
+code point" "First
+
+code point" "Last
+
+code point" "Bytes in
+
+sequence"
+
+Bits            Byte 1  Byte 2  Byte 3  Byte 4
+
+7 U+0000  U+007F  1 0xxxxxxx
+11  U+0080  U+07FF  2 110xxxxx  10xxxxxx
+16  U+0800  U+FFFF  3 1110xxxx  10xxxxxx  10xxxxxx
+21  U+10000 U+1FFFFF  4 11110xxx  10xxxxxx  10xxxxxx  10xxxxxx
+
+
+dog | bird | cat
+----|------|----
+foo | foo  | foo
+bar | bar  | bar
+baz | baz  | baz
+
+
+
+
 
 ## A CESU-8-aware library for the representation & transformation of
 
