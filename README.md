@@ -157,11 +157,11 @@ Bits            Byte 1  Byte 2  Byte 3  Byte 4
 21  U+10000 U+1FFFFF  4 11110xxx  10xxxxxx  10xxxxxx  10xxxxxx
 
 
-dog | bird | cat
-----|------|----
-foo | foo  | foo
-bar | bar  | bar
-baz | baz  | baz
+dog | bird |dog | bird |dog | bird |dog | bird
+----|------|----|------|----|------|----|------
+foo | foo  |foo | foo  |foo | foo  |foo | foo
+bar | bar  |bar | bar  |bar | bar  |bar | bar
+baz | baz  |baz | baz  |baz | baz  |baz | baz
 
 
 
