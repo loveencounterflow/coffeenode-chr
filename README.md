@@ -5,7 +5,7 @@
 ## JavaScript & Unicode — Introducing CESU-8
 
 When JavaScript was conceived and standardized in 1994/95, the Unicode standard was still in its infancy.
-Early design plans for a Universal Character Set had argumented that 2¹⁶ or even only 2¹⁴ codepoints should
+Early design plans for a Universal Character Set had argumented that 2<sup>16</sup> 2¹⁶ or even only 2¹⁴ codepoints should
 be more than sufficient to represent all characters in current use—it was only in 1996 that the Unicode
 Consortium acknowledged the need for a far bigger number of codepoints, and hence pushed the highest valid
 codepoint position from `0xffff` to `0x10ffff`; there are, consequently, 1,114,112 codepoints available in
