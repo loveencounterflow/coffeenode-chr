@@ -99,7 +99,9 @@ Unicode Surrogate Pair conversion to the first two codepoints in the critical te
     L = 0xdd63
     codepoint = ( H - 0xD800 ) * 0x400 + ( L - 0xDC00 ) + 0x10000
 
-we find that the result `0x24563` does point to 𤕣, an archaic variant of the modern Chinese character 龜.
+we find that the result `0x24563` does point to 𤕣 (an archaic variant of the modern Chinese character 龜). So
+it becomes clear that JavaScript *can* deal with 'astral texts' (rendering it in what has become known as
+*mojibake* 文字化け or *krüsel-krüsel*)—provided that programmers do respect surrogates.
 
 
 
