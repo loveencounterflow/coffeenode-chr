@@ -149,10 +149,25 @@ is that
 
 ## Character Representations
 
-It is often necessary to convert between different character representations. For example,
-the text `𤕣古文龜` may be rendered as `&#x24563;`
+It is often necessary to convert between different character representations. For example, the character `強`
+may be represented as `&#x5f37;` in HTML—this can help when the source text must be edited in a
+Unicode-unfriendly environment. Likewise, the Unicode Consortium identifies codepoints using the `U+`
+notation, e.g. `U+5F37;`.
 
+### Numeric Character Representation (NCR)
 
+The Numeric(al) Character Representation (NCR) format was invented to represent 'difficult' characters in
+SGML, a markup format designed in 1960s which became the ancestor of both XML and HTML. An NCR consists of
+an ampersand&nbsp;`&` followed by a hash&nbsp;`#`, followed by the numerical codepoint identifier (CID, otherwise
+known as simple 'a codepoint') of the character in question, and closed with a semicolon&nbsp;`;`.
+
+### Unicode Character Representation (UCR)
+
+The Unicode Consortium's Character Representation (UCR) format is used by the Unicode Consortium in its
+publications. It consists of an uppercase&nbsp;`U`, followed by a plus sign&nbsp;`+`, followed by the CID of
+the character in question. The CID is invariably written out in uppercase hexadecimal; it is padded with
+zeros when shorter than four digits; otherwise, it consists of five or six digits as needed. For example,
+`ਵ`, named GURMUKHI LETTER VA, is represented as `U+0A35`.
 
 
 
