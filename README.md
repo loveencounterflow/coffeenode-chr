@@ -30,10 +30,10 @@ Of course, such a move would have **broken a lot of assumptions**, such as the O
 a codepoint, a codepoint is a byte', a truism in all early encoding schemes. In Unicode, a 'character' (a
 unit of writing) is distinct from a 'glyph' (the graphical appearance of a character), and while each
 'glyph' is mapped to a 'codepoint', many virtually indistinguishable glyphs may be mapped to disparate
-codepoints (for a number of reasons—some good, some bad, some historically justified, some mistakenly).
-Further, only 256 Unicode codepoints are representable within a 'byte'—a scant 0.256% of the ≈100,000
-codepoints in use (as of Unicode&nbsp;6). Understanding the codepoint / character / byte schism is essential
-for any programmer wanting to process text.
+codepoints (for a number of reasons—some good, some bad, some historically justified, some mistaken).
+Further, **only 256 Unicode codepoints are representable within a 'byte'—a scant 0.256% of the ≈100,000
+codepoints in use** (as of Unicode&nbsp;6). **Understanding the codepoint / character / byte schism is essential
+for any programmer wanting to process text**.
 
 Now JavaScript *was* fairly advanced for its time in that its text data type—the `String`—was defined in
 terms of Unicode characters at a time when the programming community at large was still happily hacking
@@ -103,6 +103,11 @@ we find that the result `0x24563` does point to 𤕣 (an archaic variant of the 
 it becomes clear that JavaScript *can* deal with 'astral texts' (rendering it in what has become known as
 *mojibake* 文字化け or *krüsel-krüsel*)—provided that programmers do respect surrogates.
 
+This leaves code wranglers with a truly confusing situation: First, we had to swallow that **a byte is not
+a character** (anyone who spent their time between 2000 and 2010 trying to 'make everything work' in Python
+versions that had *both* an 8bit `str` type *and* a 16bit `Unicode` type will know whta i'm talking about).
+Next, we have to swallow that (in Java, in JavaScript, and in some versions of Python, depending on compilation
+flags) even **a single character may or may not be a single codepoint**.
 
 
 
