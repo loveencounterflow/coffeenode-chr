@@ -128,6 +128,7 @@ versions of Python, depending on compilation flags) even **a single character ma
 codepoint**; instead, **characters with codepoints above `0xffff` are represented as two 'Code Units'**, one
 more term to learn here.
 
+<!--
 ## UTF-8 & CESU-8
 
 UTF-8 (an abbreviation for 'Unified Character Set Transformation Format, 8-bit') was invented in 1992 to
@@ -139,39 +140,18 @@ Since codepoints are represented as positive integers, and octets (bytes) can be
 between zero and 255, the problem that UTF-8 attempts to solve boils down to representing 'big' integers
 (those greater than 255) as series of octets.
 
-"Bits of
-
-code point" "First
-
-code point" "Last
-
-code point" "Bytes in
-
-sequence"
-
-Bits            Byte 1  Byte 2  Byte 3  Byte 4
-
-7 U+0000  U+007F  1 0xxxxxxx
-11  U+0080  U+07FF  2 110xxxxx  10xxxxxx
-16  U+0800  U+FFFF  3 1110xxxx  10xxxxxx  10xxxxxx
-21  U+10000 U+1FFFFF  4 11110xxx  10xxxxxx  10xxxxxx  10xxxxxx
+I won't go into detail here—there's a good (Wikipedia)[http://en.wikipedia.org/wiki/UTF-8] article
+on how UTF-8 mangles bits. The one important thing to understand when it comes to JavaScript and UTF-8
+is that
 
 
+ -->
 
+## Character Representations
 
+It is often necessary to convert between different character representations. For example,
+the text `𤕣古文龜` may be rendered as `&amp;#x24563;`
 
-Bits of  |from      |to        | bird |dog | bird |dog | bird
-codepoint|codepoint |codepoint | bird |dog | bird |dog | bird
----------|----------|----------|------|----|------|----|------
-&nbsp;7  |0x00000   |0x00007f  | foo  |foo | foo  |foo | foo
-11       |0x00080   |0x0007ff  | bar  |bar | bar  |bar | bar
-16       |0x00800   |0x00ffff  | baz  |baz | baz  |baz | baz
-21       |0x10000   |0x1fffff  | baz  |baz | baz  |baz | baz
-
-
-
-
-## A CESU-8-aware library for the representation & transformation of
 
 
 
