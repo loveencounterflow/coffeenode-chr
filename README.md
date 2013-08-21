@@ -212,11 +212,12 @@ Unicode&nbsp;6. When using UTF-8 as an encoding, there are actually a mere 128 c
 one byte only). **Understanding the codepoint / character / byte schism is essential for any programmer
 wanting to process text**.
 
-Now JavaScript *was* fairly advanced for its time in that its text data type—the `String`—was defined in
+Now **JavaScript *was* fairly advanced for its time** in that its text data type—the `String`—was defined in
 terms of Unicode characters at a time when the programming community at large was still happily hacking
 bytes, and web designers spit out HTML pages using ISO&nbsp;8859-1 (by comparison, Python, which was
 conceived in 1991, got a Unicode data type only in 2000, and abolished its 8bit string type in 2008—until
-then, most programmers operated on bytes rather than codepoints when manipulating text in that language).
+then, a good many Python programmers operated on bytes rather than codepoints when manipulating text in that
+language).
 
 Since JavaScript's `String` data type is character-oriented and Array-like, it is very convenient to, say,
 iterate over characters in a text. It is as simple as fetching the length of the string and iterate over
