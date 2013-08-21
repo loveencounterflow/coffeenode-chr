@@ -194,20 +194,23 @@ Characters, imagine the same had happened to ASCII—an 8bit character set that 
 the 8<sup>th</sup> bit undefined. We could go and make those 128 codepoints surrogate characters,
 stipulating that the 64 codepoints in the range  `0x80`...`0xbf` shall serve as 'High (or Leading)
 Surrogates', those in the range `0xc0`...`0xff` as 'Low (or Trailing) Surrogates', and that High and Low
-Surrogates shall always appear as pairs. In essence, then, every aurrogate pair `HL` then represents a
-number written out in a positional system with the base 64, that is, we can project it onto codepoints
-beyond `0xff` (255) by saying that a surrogate pair `HL` is a way to access codepoint `( H — 0x80 ) * 64 + (
-L — 0xc0 ) + 255`, allowing us to express around 4000 additional codepoints in the range `0x100`...`0x10fe`
-from within the confines of an 8bit character set!
+Surrogates shall always appear as pairs. In essence, then, every surrogate pair `HL` then represents a
+number written out in a positional system with the base 64 (with the offsets `0x80` and `0xc0`)—that is, we
+can project it onto codepoints beyond `0xff` (255) by saying that a surrogate pair `HL` is a way to access
+codepoint `( H — 0x80 ) * 64 + ( L — 0xc0 ) + 255`, allowing us to express around 4000 additional codepoints
+in the range `0x100`...`0x10fe` from within the confines of an 8bit character set!
 
 Of course, such a move would have **broken a lot of assumptions**, such as the Olde Saw that 'a character is
 a codepoint, a codepoint is a byte', a truism in all early encoding schemes. In Unicode, a 'character' (a
 unit of writing) is distinct from a 'glyph' (the graphical appearance of a character), and while each
 'glyph' is mapped to a 'codepoint', many virtually indistinguishable glyphs may be mapped to disparate
 codepoints (for a number of reasons—some good, some bad, some historically justified, some mistaken).
-Further, **only 256 Unicode codepoints are representable within a 'byte'—a scant 0.256% of the ≈100,000
-codepoints in use** (as of Unicode&nbsp;6). **Understanding the codepoint / character / byte schism is essential
-for any programmer wanting to process text**.
+
+When working with Unicode, it is important to be aware of the fact that **only up to 256 Unicode codepoints
+are maximally representable within a 'byte'—a scant 0.256% of the ≈100,000 codepoints in use** (as of
+Unicode&nbsp;6. When using UTF-8 as an encoding, there are actually a mere 128 codepoints left that occupy
+one byte only). **Understanding the codepoint / character / byte schism is essential for any programmer
+wanting to process text**.
 
 Now JavaScript *was* fairly advanced for its time in that its text data type—the `String`—was defined in
 terms of Unicode characters at a time when the programming community at large was still happily hacking
