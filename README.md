@@ -22,20 +22,21 @@ Require as, e.g.
 **analyze        = ( cid\_hint, options ) ->** The many-tricks-pony of `coffeenode-chr`. It will return an
 object describing multiple aspects of the codepoint in question. Examples:
 
-
 ```coffeescript
 $ log CHR.analyze 'helo world'
 
-    { chr:    'h',                #
-      csg:    'u',                #
-      cid:    104,                #
-      fncr:   'u-latn-68',        #
-      sfncr:  'u-68',             #
-      ncr:    '&#x68;',           #
-      xncr:   '&#x68;',           #
-      rsg:    'u-latn' }          #
+{ chr:    'h',                # The first character of the text.
+  csg:    'u',                # CSG 'u', i.e. a Unicode character.
+  cid:    104,                # Codepoint: 104 = 0x68.
+  fncr:   'u-latn-68',        # The 'friendly NCR'; see 'rsg', below.
+  sfncr:  'u-68',             # The 'short friendly NCR'.
+  ncr:    '&#x68;',           # HTML-comaptible Numeric Character Reference (NCR).
+  xncr:   '&#x68;',           # For codepoints outside of Unicode, this will differ from the NCR.
+  rsg:    'u-latn' }          # The 'range sigil', i.e. Unicode block identifier.
 ````
 
+When using Numerical Character References (NCRs), it is important to choose the right 'mode' (namely, `ncr`
+or `xncr`):
 
 ```coffeescript
 $ log CHR.analyze '&#x24563;'
@@ -48,10 +49,7 @@ $ log CHR.analyze '&#x24563;'
   ncr:    '&#x26;',           #
   xncr:   '&#x26;',           #
   rsg:    'u-latn' }          #
-````
 
-
-```coffeescript
 $ log CHR.analyze '&#x24563;', mode: 'ncr'
 
 { chr:    '𤕣',                #
@@ -62,10 +60,7 @@ $ log CHR.analyze '&#x24563;', mode: 'ncr'
   ncr:    '&#x24563;',        #
   xncr:   '&#x24563;',        #
   rsg:    'u-cjk-xb' }        #
-````
 
-
-```coffeescript
 $ log CHR.analyze '&#x24563;', mode: 'xncr'
 
 { chr:    '𤕣',                #
@@ -78,6 +73,8 @@ $ log CHR.analyze '&#x24563;', mode: 'xncr'
   rsg:    'u-cjk-xb' }        #
 ````
 
+In the above examples, the NCR `&#x24563;` was successfully decoded in modes `ncr` and `xncr`, while in
+`plain` mode, `&` counts as the first character of the text.
 
 ```coffeescript
 $ log CHR.analyze '&jzr#x24563;'
