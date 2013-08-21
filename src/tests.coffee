@@ -33,13 +33,13 @@ assert.deepEqual ( CHR._chr_csg_cid_from_chr '&#x61;abc', 'plain' ),            
 assert.deepEqual ( CHR._chr_csg_cid_from_chr '&#x61;abc', 'ncr' ),                   [ '&#x61;', 'u', 97 ]
 assert.deepEqual ( CHR._chr_csg_cid_from_chr '&#x61;abc', 'xncr' ),                  [ '&#x61;', 'u', 97 ]
 assert.deepEqual ( CHR.csg_cid_from_chr '&#x24563;' ),                               [ 'u', 38 ]
-assert.deepEqual ( CHR.csg_cid_from_chr '&#x24563;', 'plain' ),                      [ 'u', 38 ]
-assert.deepEqual ( CHR.csg_cid_from_chr '&#x24563;', 'ncr' ),                        [ 'u', 148835 ]
-assert.deepEqual ( CHR.csg_cid_from_chr '&#x24563;', 'xncr' ),                       [ 'u', 148835 ]
+assert.deepEqual ( CHR.csg_cid_from_chr '&#x24563;', mode: 'plain' ),                      [ 'u', 38 ]
+assert.deepEqual ( CHR.csg_cid_from_chr '&#x24563;', mode: 'ncr' ),                        [ 'u', 148835 ]
+assert.deepEqual ( CHR.csg_cid_from_chr '&#x24563;', mode: 'xncr' ),                       [ 'u', 148835 ]
 assert.deepEqual ( CHR.csg_cid_from_chr '𤕣' ),                                       [ 'u', 148835 ]
-assert.deepEqual ( CHR.csg_cid_from_chr '𤕣', 'plain' ),                              [ 'u', 148835 ]
-assert.deepEqual ( CHR.csg_cid_from_chr '𤕣', 'ncr' ),                                [ 'u', 148835 ]
-assert.deepEqual ( CHR.csg_cid_from_chr '𤕣', 'xncr' ),                               [ 'u', 148835 ]
+assert.deepEqual ( CHR.csg_cid_from_chr '𤕣', mode: 'plain' ),                              [ 'u', 148835 ]
+assert.deepEqual ( CHR.csg_cid_from_chr '𤕣', mode: 'ncr' ),                                [ 'u', 148835 ]
+assert.deepEqual ( CHR.csg_cid_from_chr '𤕣', mode: 'xncr' ),                               [ 'u', 148835 ]
 assert.deepEqual ( ( '𤕣'[ 0 ] + 'x' ).match CHR._first_chr_matcher_plain ), null
 assert.throws ( -> CHR._chr_csg_cid_from_chr '𤕣'[ 0 ] ),        /^Error: illegal character sequence/
 assert.throws ( -> CHR._chr_csg_cid_from_chr '𤕣'[ 0 ] + 'x' ),  /^Error: illegal character sequence/
@@ -55,20 +55,20 @@ assert.deepEqual ( CHR.chrs_of '𤕣a&#123;b𤕣c'        ), [ '𤕣', 'a', '&',
 assert.deepEqual ( CHR.chrs_of '𤕣a&jzr#123;b𤕣c'     ), [ '𤕣', 'a', '&', 'j', 'z', 'r', '#', '1', '2', '3', ';', 'b', '𤕣', 'c' ]
 assert.deepEqual ( CHR.chrs_of '𤕣a&#x123ab;b𤕣c'     ), [ '𤕣', 'a', '&', '#', 'x', '1', '2', '3', 'a', 'b', ';', 'b', '𤕣', 'c' ]
 assert.deepEqual ( CHR.chrs_of '𤕣a&jzr#x123ab;b𤕣c'  ), [ '𤕣', 'a', '&', 'j', 'z', 'r', '#', 'x', '1', '2', '3', 'a', 'b', ';', 'b', '𤕣', 'c' ]
-assert.deepEqual ( CHR.chrs_of '',                  'ncr'  ), []
-assert.deepEqual ( CHR.chrs_of 'abc',               'ncr'  ), [ 'a', 'b', 'c' ]
-assert.deepEqual ( CHR.chrs_of '𤕣abc',              'ncr'  ), [ '𤕣', 'a', 'b', 'c' ]
-assert.deepEqual ( CHR.chrs_of '𤕣ab𤕣c',             'ncr'  ), [ '𤕣', 'a', 'b', '𤕣', 'c' ]
-assert.deepEqual ( CHR.chrs_of '𤕣a&#123;b𤕣c',       'ncr'  ), [ '𤕣', 'a', '&#123;', 'b', '𤕣', 'c' ]
-assert.deepEqual ( CHR.chrs_of '𤕣a&#x123ab;b𤕣c',    'ncr'  ), [ '𤕣', 'a', '&#x123ab;', 'b', '𤕣', 'c' ]
-assert.deepEqual ( CHR.chrs_of '𤕣a&jzr#x123ab;b𤕣c', 'ncr'  ), [ '𤕣', 'a', '&', 'j', 'z', 'r', '#', 'x', '1', '2', '3', 'a', 'b', ';', 'b', '𤕣', 'c' ]
-assert.deepEqual ( CHR.chrs_of '',                  'xncr' ), []
-assert.deepEqual ( CHR.chrs_of 'abc',               'xncr' ), [ 'a', 'b', 'c' ]
-assert.deepEqual ( CHR.chrs_of '𤕣abc',              'xncr' ), [ '𤕣', 'a', 'b', 'c' ]
-assert.deepEqual ( CHR.chrs_of '𤕣ab𤕣c',             'xncr' ), [ '𤕣', 'a', 'b', '𤕣', 'c' ]
-assert.deepEqual ( CHR.chrs_of '𤕣a&#123;b𤕣c',       'xncr' ), [ '𤕣', 'a', '&#123;', 'b', '𤕣', 'c' ]
-assert.deepEqual ( CHR.chrs_of '𤕣a&#x123ab;b𤕣c',    'xncr' ), [ '𤕣', 'a', '&#x123ab;', 'b', '𤕣', 'c' ]
-assert.deepEqual ( CHR.chrs_of '𤕣a&jzr#x123ab;b𤕣c', 'xncr' ), [ '𤕣', 'a', '&jzr#x123ab;', 'b', '𤕣', 'c' ]
+assert.deepEqual ( CHR.chrs_of '',                  mode: 'ncr'  ), []
+assert.deepEqual ( CHR.chrs_of 'abc',               mode: 'ncr'  ), [ 'a', 'b', 'c' ]
+assert.deepEqual ( CHR.chrs_of '𤕣abc',              mode: 'ncr'  ), [ '𤕣', 'a', 'b', 'c' ]
+assert.deepEqual ( CHR.chrs_of '𤕣ab𤕣c',             mode: 'ncr'  ), [ '𤕣', 'a', 'b', '𤕣', 'c' ]
+assert.deepEqual ( CHR.chrs_of '𤕣a&#123;b𤕣c',       mode: 'ncr'  ), [ '𤕣', 'a', '&#123;', 'b', '𤕣', 'c' ]
+assert.deepEqual ( CHR.chrs_of '𤕣a&#x123ab;b𤕣c',    mode: 'ncr'  ), [ '𤕣', 'a', '&#x123ab;', 'b', '𤕣', 'c' ]
+assert.deepEqual ( CHR.chrs_of '𤕣a&jzr#x123ab;b𤕣c', mode: 'ncr'  ), [ '𤕣', 'a', '&', 'j', 'z', 'r', '#', 'x', '1', '2', '3', 'a', 'b', ';', 'b', '𤕣', 'c' ]
+assert.deepEqual ( CHR.chrs_of '',                  mode: 'xncr' ), []
+assert.deepEqual ( CHR.chrs_of 'abc',               mode: 'xncr' ), [ 'a', 'b', 'c' ]
+assert.deepEqual ( CHR.chrs_of '𤕣abc',              mode: 'xncr' ), [ '𤕣', 'a', 'b', 'c' ]
+assert.deepEqual ( CHR.chrs_of '𤕣ab𤕣c',             mode: 'xncr' ), [ '𤕣', 'a', 'b', '𤕣', 'c' ]
+assert.deepEqual ( CHR.chrs_of '𤕣a&#123;b𤕣c',       mode: 'xncr' ), [ '𤕣', 'a', '&#123;', 'b', '𤕣', 'c' ]
+assert.deepEqual ( CHR.chrs_of '𤕣a&#x123ab;b𤕣c',    mode: 'xncr' ), [ '𤕣', 'a', '&#x123ab;', 'b', '𤕣', 'c' ]
+assert.deepEqual ( CHR.chrs_of '𤕣a&jzr#x123ab;b𤕣c', mode: 'xncr' ), [ '𤕣', 'a', '&jzr#x123ab;', 'b', '𤕣', 'c' ]
 
 
 #===========================================================================================================
@@ -83,18 +83,18 @@ assert.strictEqual ( CHR.cid_from_chr '&#678;'            ), 38
 assert.strictEqual ( CHR.cid_from_chr '&#x678;'           ), 38
 assert.strictEqual ( CHR.cid_from_chr '&jzr#678;'         ), 38
 assert.strictEqual ( CHR.cid_from_chr '&jzr#x678;'        ), 38
-assert.strictEqual ( CHR.cid_from_chr 'a',          'ncr', ), 97
-assert.strictEqual ( CHR.cid_from_chr 'x',          'ncr', ), 120
-assert.strictEqual ( CHR.cid_from_chr '&#678;',     'ncr', ), 678
-assert.strictEqual ( CHR.cid_from_chr '&#x678;',    'ncr', ), 0x678
-assert.strictEqual ( CHR.cid_from_chr '&jzr#678;',  'ncr', ), 38
-assert.strictEqual ( CHR.cid_from_chr '&jzr#x678;', 'ncr', ), 38
-assert.strictEqual ( CHR.cid_from_chr 'a',          'xncr', ), 97
-assert.strictEqual ( CHR.cid_from_chr 'x',          'xncr', ), 120
-assert.strictEqual ( CHR.cid_from_chr '&#678;',     'xncr', ), 678
-assert.strictEqual ( CHR.cid_from_chr '&#x678;',    'xncr', ), 0x678
-assert.strictEqual ( CHR.cid_from_chr '&jzr#678;',  'xncr', ), 678
-assert.strictEqual ( CHR.cid_from_chr '&jzr#x678;', 'xncr', ), 0x678
+assert.strictEqual ( CHR.cid_from_chr 'a',          mode: 'ncr', ), 97
+assert.strictEqual ( CHR.cid_from_chr 'x',          mode: 'ncr', ), 120
+assert.strictEqual ( CHR.cid_from_chr '&#678;',     mode: 'ncr', ), 678
+assert.strictEqual ( CHR.cid_from_chr '&#x678;',    mode: 'ncr', ), 0x678
+assert.strictEqual ( CHR.cid_from_chr '&jzr#678;',  mode: 'ncr', ), 38
+assert.strictEqual ( CHR.cid_from_chr '&jzr#x678;', mode: 'ncr', ), 38
+assert.strictEqual ( CHR.cid_from_chr 'a',          mode: 'xncr', ), 97
+assert.strictEqual ( CHR.cid_from_chr 'x',          mode: 'xncr', ), 120
+assert.strictEqual ( CHR.cid_from_chr '&#678;',     mode: 'xncr', ), 678
+assert.strictEqual ( CHR.cid_from_chr '&#x678;',    mode: 'xncr', ), 0x678
+assert.strictEqual ( CHR.cid_from_chr '&jzr#678;',  mode: 'xncr', ), 678
+assert.strictEqual ( CHR.cid_from_chr '&jzr#x678;', mode: 'xncr', ), 0x678
 
 
 # log '-------------------------------'
@@ -194,8 +194,8 @@ assert.deepEqual ( CHR.analyze '&jzr#x24563;'                ), {"chr":"&","csg"
 assert.deepEqual ( CHR.analyze '&jzr#x24563;', mode: 'ncr'   ), {"chr":"&","csg":"u","cid":38,"fncr":"u-latn-26","sfncr":"u-26","ncr":"&#x26;","xncr":"&#x26;","rsg":"u-latn"}
 assert.deepEqual ( CHR.analyze '&jzr#x24563;', mode: 'xncr'  ), {"chr":"&jzr#x24563;","csg":"jzr","cid":148835,"fncr":"jzr-24563","sfncr":"jzr-24563","ncr":"&#x24563;","xncr":"&jzr#x24563;","rsg":null}
 
-log CHR.analyze '&jzr#xe100;', mode: 'ncr'
-log CHR.analyze '&jzr#xe100;', mode: 'xncr'
+# log CHR.analyze '&jzr#xe100;', mode: 'ncr'
+# log CHR.analyze '&jzr#xe100;', mode: 'xncr'
 
 
 

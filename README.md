@@ -25,7 +25,7 @@ The many-tricks-pony of `coffeenode-chr`. It will return an
 object describing multiple aspects of the codepoint in question. Examples:
 
 ```coffeescript
-$ log CHR.analyze 'helo world'
+# CHR.analyze 'helo world'
 
 { chr:    'h',                # The first character of the text.
   csg:    'u',                # CSG 'u', i.e. a Unicode character.
@@ -41,7 +41,7 @@ When using Numerical Character References (NCRs), it is important to choose the 
 or `xncr`):
 
 ```coffeescript
-$ log CHR.analyze '&#x24563;' # or use mode: 'plain'
+# CHR.analyze '&#x24563;' # or use mode: 'plain'
 
 { chr:    '&',
   csg:    'u',
@@ -52,7 +52,7 @@ $ log CHR.analyze '&#x24563;' # or use mode: 'plain'
   xncr:   '&#x26;',
   rsg:    'u-latn' }
 
-$ log CHR.analyze '&#x24563;', mode: 'ncr'
+# CHR.analyze '&#x24563;', mode: 'ncr'
 
 { chr:    '𤕣',
   csg:    'u',
@@ -63,7 +63,7 @@ $ log CHR.analyze '&#x24563;', mode: 'ncr'
   xncr:   '&#x24563;',
   rsg:    'u-cjk-xb' }
 
-$ log CHR.analyze '&#x24563;', mode: 'xncr'
+# CHR.analyze '&#x24563;', mode: 'xncr'
 
 { chr:    '𤕣',
   csg:    'u',
@@ -84,7 +84,7 @@ recognized and treated as an ordinary text (the same way browsers do it). The fi
 is an `&` ampersand, so all we get is a desciption of that character in mode `ncr`:
 
 ```coffeescript
-$ log CHR.analyze '&jzr#xe100;', mode: 'ncr'
+# CHR.analyze '&jzr#xe100;', mode: 'ncr'
 
 { chr:    '&',
   csg:    'u',
@@ -99,7 +99,7 @@ $ log CHR.analyze '&jzr#xe100;', mode: 'ncr'
 When we switch to mode `xncr`,
 
 ```coffeescript
-$ log CHR.analyze '&jzr#xe100;', mode: 'xncr'
+# CHR.analyze '&jzr#xe100;', mode: 'xncr'
 
 { chr: '&jzr#xe100;',       # the XNCR has been recognized.
   csg: 'jzr',               # The CSG identifies the Jizura Character Set (JZRCS).
@@ -129,17 +129,17 @@ $ log CHR.analyze '&jzr#xe100;', mode: 'xncr'
 
 **as\_xncr        = ( cid\_hint, options ) ->**
 
-**chrs\_of = ( text, mode ) ->**
+**chrs\_of = ( text, options ) ->**
 
-**cid\_from\_chr = ( chr, mode ) ->**
+**cid\_from\_chr = ( chr, options ) ->**
 
-**cid\_from\_fncr = ( ) ->**
+<!-- **cid\_from\_fncr = ( ) ->**
 
 **cid\_from\_ncr = ( ) ->**
 
 **cid\_from\_xncr = ( ) ->**
-
-**csg\_cid\_from\_chr = ( chr, mode ) ->**
+ -->
+**csg\_cid\_from\_chr = ( chr, options ) ->**
 
 **validate\_is\_cid = ( x ) ->**
 

@@ -12,16 +12,32 @@ unicode_blocks_data       = require './unicode-blocks-data'
 binary_interval_search    = require './binary-interval-search'
 
 
-# console.log _range_names_and_rsgs
+
+#===========================================================================================================
+# SPLIT TEXT INTO CHARACTERS
+#-----------------------------------------------------------------------------------------------------------
+@chrs_of = ( text, options ) ->
+  return [] if text.length is 0
+  #.........................................................................................................
+  switch mode = options?[ 'mode' ] ? 'plain'
+    when 'plain'  then splitter = @_plain_splitter
+    when 'ncr'    then splitter = @_ncr_splitter
+    when 'xncr'   then splitter = @_xncr_splitter
+    else throw new Error "unknown mode: #{rpr mode}"
+  #.........................................................................................................
+  return ( text.split splitter ).filter ( element, idx ) -> return element.length isnt 0
+
 
 #===========================================================================================================
 # CONVERTING TO CID
 #-----------------------------------------------------------------------------------------------------------
-@cid_from_chr = ( chr, mode ) ->
+@cid_from_chr = ( chr, options ) ->
+  mode = options?[ 'mode' ] ? 'plain'
   return ( @_chr_csg_cid_from_chr chr, mode )[ 2 ]
 
 #-----------------------------------------------------------------------------------------------------------
-@csg_cid_from_chr = ( chr, mode ) ->
+@csg_cid_from_chr = ( chr, options ) ->
+  mode = options?[ 'mode' ] ? 'plain'
   return ( @_chr_csg_cid_from_chr chr, mode )[ 1 .. ]
 
 #-----------------------------------------------------------------------------------------------------------
@@ -50,7 +66,7 @@ binary_interval_search    = require './binary-interval-search'
       return [ first_chr, 'u', first_chr.charCodeAt 0 ]
     #.......................................................................................................
     when 2
-      # thx to http://perldoc.perl.org/Encode/Unicode.html
+      ### thx to http://perldoc.perl.org/Encode/Unicode.html ###
       hi  = first_chr.charCodeAt 0
       lo  = first_chr.charCodeAt 1
       cid = ( hi - 0xD800 ) * 0x400 + ( lo - 0xDC00 ) + 0x10000
@@ -66,14 +82,14 @@ binary_interval_search    = require './binary-interval-search'
       return [ first_chr, csg, cid ]
 
 
-#-----------------------------------------------------------------------------------------------------------
-@cid_from_ncr = ( ) ->
+# #-----------------------------------------------------------------------------------------------------------
+# @cid_from_ncr = ( ) ->
 
-#-----------------------------------------------------------------------------------------------------------
-@cid_from_xncr = ( ) ->
+# #-----------------------------------------------------------------------------------------------------------
+# @cid_from_xncr = ( ) ->
 
-#-----------------------------------------------------------------------------------------------------------
-@cid_from_fncr = ( ) ->
+# #-----------------------------------------------------------------------------------------------------------
+# @cid_from_fncr = ( ) ->
 
 
 #===========================================================================================================
@@ -117,7 +133,7 @@ binary_interval_search    = require './binary-interval-search'
 #-----------------------------------------------------------------------------------------------------------
 @_unicode_chr_from_cid = ( cid ) ->
   return String.fromCharCode cid if cid <= 0xffff
-  # thx to http://perldoc.perl.org/Encode/Unicode.html
+  ### thx to http://perldoc.perl.org/Encode/Unicode.html ###
   hi = ( Math.floor ( cid - 0x10000 ) / 0x400 ) + 0xD800
   lo =              ( cid - 0x10000 ) % 0x400   + 0xDC00
   return ( String.fromCharCode hi ) + ( String.fromCharCode lo )
@@ -190,7 +206,7 @@ binary_interval_search    = require './binary-interval-search'
       cid             = cid_hint
     when 'text'
       [ csg_of_cid_hint
-        cid             ] = @csg_cid_from_chr cid_hint, mode
+        cid             ] = @csg_cid_from_chr cid_hint, mode: mode
     else
       throw new Error "expected a text or a number as first argument, got a #{type}"
   #.........................................................................................................
@@ -204,22 +220,6 @@ binary_interval_search    = require './binary-interval-search'
   @validate_is_csg csg
   @validate_is_cid cid
   return [ csg, cid, ]
-
-
-#===========================================================================================================
-# SPLIT TEXT INTO CHARACTERS
-#-----------------------------------------------------------------------------------------------------------
-@chrs_of = ( text, mode ) ->
-  return [] if text.length is 0
-  #.........................................................................................................
-  mode ?= 'plain'
-  switch mode
-    when 'plain'  then splitter = @_plain_splitter
-    when 'ncr'    then splitter = @_ncr_splitter
-    when 'xncr'   then splitter = @_xncr_splitter
-    else throw new Error "unknown mode: #{rpr mode}"
-  #.........................................................................................................
-  return ( text.split splitter ).filter ( element, idx ) -> return element.length isnt 0
 
 
 #===========================================================================================================
