@@ -194,13 +194,8 @@ assert.deepEqual ( CHR.analyze '&jzr#x24563;'                ), {"chr":"&","csg"
 assert.deepEqual ( CHR.analyze '&jzr#x24563;', mode: 'ncr'   ), {"chr":"&","csg":"u","cid":38,"fncr":"u-latn-26","sfncr":"u-26","ncr":"&#x26;","xncr":"&#x26;","rsg":"u-latn"}
 assert.deepEqual ( CHR.analyze '&jzr#x24563;', mode: 'xncr'  ), {"chr":"&jzr#x24563;","csg":"jzr","cid":148835,"fncr":"jzr-24563","sfncr":"jzr-24563","ncr":"&#x24563;","xncr":"&jzr#x24563;","rsg":null}
 
-log CHR.analyze 'helo world'
-log CHR.analyze '&#x24563;'
-log CHR.analyze '&#x24563;', mode: 'ncr'
-log CHR.analyze '&#x24563;', mode: 'xncr'
-log CHR.analyze '&jzr#x24563;'
-log CHR.analyze '&jzr#x24563;', mode: 'ncr'
-log CHR.analyze '&jzr#x24563;', mode: 'xncr'
+log CHR.analyze '&jzr#xe100;', mode: 'ncr'
+log CHR.analyze '&jzr#xe100;', mode: 'xncr'
 
 
 

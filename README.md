@@ -19,7 +19,9 @@ Require as, e.g.
 
 ## Overview
 
-**analyze        = ( cid\_hint, options ) ->** The many-tricks-pony of `coffeenode-chr`. It will return an
+**analyze        = ( cid\_hint, options ) ->**
+
+The many-tricks-pony of `coffeenode-chr`. It will return an
 object describing multiple aspects of the codepoint in question. Examples:
 
 ```coffeescript
@@ -39,82 +41,74 @@ When using Numerical Character References (NCRs), it is important to choose the 
 or `xncr`):
 
 ```coffeescript
-$ log CHR.analyze '&#x24563;'
+$ log CHR.analyze '&#x24563;' # or use mode: 'plain'
 
-{ chr:    '&',                #
-  csg:    'u',                #
-  cid:    38,                 #
-  fncr:   'u-latn-26',        #
-  sfncr:  'u-26',             #
-  ncr:    '&#x26;',           #
-  xncr:   '&#x26;',           #
-  rsg:    'u-latn' }          #
+{ chr:    '&',
+  csg:    'u',
+  cid:    38,
+  fncr:   'u-latn-26',
+  sfncr:  'u-26',
+  ncr:    '&#x26;',
+  xncr:   '&#x26;',
+  rsg:    'u-latn' }
 
 $ log CHR.analyze '&#x24563;', mode: 'ncr'
 
-{ chr:    '𤕣',                #
-  csg:    'u',                #
-  cid:    148835,             #
-  fncr:   'u-cjk-xb-24563',   #
-  sfncr:  'u-24563',          #
-  ncr:    '&#x24563;',        #
-  xncr:   '&#x24563;',        #
-  rsg:    'u-cjk-xb' }        #
+{ chr:    '𤕣',
+  csg:    'u',
+  cid:    148835,
+  fncr:   'u-cjk-xb-24563',
+  sfncr:  'u-24563',
+  ncr:    '&#x24563;',
+  xncr:   '&#x24563;',
+  rsg:    'u-cjk-xb' }
 
 $ log CHR.analyze '&#x24563;', mode: 'xncr'
 
-{ chr:    '𤕣',                #
-  csg:    'u',                #
-  cid:    148835,             #
-  fncr:   'u-cjk-xb-24563',   #
-  sfncr:  'u-24563',          #
-  ncr:    '&#x24563;',        #
-  xncr:   '&#x24563;',        #
-  rsg:    'u-cjk-xb' }        #
+{ chr:    '𤕣',
+  csg:    'u',
+  cid:    148835,
+  fncr:   'u-cjk-xb-24563',
+  sfncr:  'u-24563',
+  ncr:    '&#x24563;',
+  xncr:   '&#x24563;',
+  rsg:    'u-cjk-xb' }
 ````
 
 In the above examples, the NCR `&#x24563;` was successfully decoded in modes `ncr` and `xncr`, while in
 `plain` mode, `&` counts as the first character of the text.
 
-```coffeescript
-$ log CHR.analyze '&jzr#x24563;'
+Two more examples to show how to reference characters outside of Unicode: First let's analyze an 'extended
+NCR' using mode `ncr`. The result is that, since `&jzr#x24563;` violates the rules for NCRs, it is not
+recognized and treated as an ordinary text (the same way browsers do it). The first character of that text
+is an `&` ampersand, so all we get is a desciption of that character in mode `ncr`:
 
-{ chr:    '&',                #
-  csg:    'u',                #
-  cid:    38,                 #
-  fncr:   'u-latn-26',        #
-  sfncr:  'u-26',             #
-  ncr:    '&#x26;',           #
-  xncr:   '&#x26;',           #
-  rsg:    'u-latn' }          #
+```coffeescript
+$ log CHR.analyze '&jzr#xe100;', mode: 'ncr'
+
+{ chr:    '&',
+  csg:    'u',
+  cid:    38,
+  fncr:   'u-latn-26',
+  sfncr:  'u-26',
+  ncr:    '&#x26;',
+  xncr:   '&#x26;',
+  rsg:    'u-latn' }
 ````
 
+When we switch to mode `xncr`,
 
 ```coffeescript
-$ log CHR.analyze '&jzr#x24563;', mode: 'ncr'
+$ log CHR.analyze '&jzr#xe100;', mode: 'xncr'
 
-{ chr:    '&',                #
-  csg:    'u',                #
-  cid:    38,                 #
-  fncr:   'u-latn-26',        #
-  sfncr:  'u-26',             #
-  ncr:    '&#x26;',           #
-  xncr:   '&#x26;',           #
-  rsg:    'u-latn' }          #
-````
-
-
-```coffeescript
-$ log CHR.analyze '&jzr#x24563;', mode: 'xncr'
-
-{ chr:    '&jzr#x24563;',     #
-  csg:    'jzr',              #
-  cid:    148835,             #
-  fncr:   'jzr-24563',        #
-  sfncr:  'jzr-24563',        #
-  ncr:    '&#x24563;',        #
-  xncr:   '&jzr#x24563;',     #
-  rsg:    null }              #
+{ chr: '&jzr#xe100;',       # the XNCR has been recognized.
+  csg: 'jzr',               # The CSG identifies the Jizura Character Set (JZRCS).
+  cid: 57600,               # CID is 57600 = 0xe100
+  fncr: 'jzr-cc-e100',      # The FNCR tells us that the codepoint is in the 'cc' block of the JZRCS.
+  sfncr: 'jzr-e100',
+  ncr: '&#xe100;',          # When rendering to a web page, we must use standard NCRs.
+  xncr: '&jzr#xe100;',      # In plain texts, databases and so on, we may wish to use this notation.
+  rsg: 'jzr-cc' }
 ````
 
 **as\_chr         = ( cid\_hint, options ) ->**
