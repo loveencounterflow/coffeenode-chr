@@ -10,10 +10,9 @@
     "type": "git",
     "url": "https://github.com/loveencounterflow/coffeenode-chr.git"
   },
-  "devDependencies": {
-    "coffeenode-trm": "~0.1.6"
-  },
+  "devDependencies": {},
   "dependencies": {
+    "coffeenode-trm": "~0.1.6",
     "coffee-script": "~1.6.2",
     "coffeenode-types": "~0.1.0"
   },
@@ -24,7 +23,11 @@
     "compile-statements": {},
     "%cache": {
       "routes": {
-        "lib/main.js": 1
+        "lib/main.js": 1,
+        "lib/tests.js": 1,
+        "lib/binary-interval-search.js": 1,
+        "lib/unicde-blocks-data.js": 1,
+        "lib/unicode-blocks-data.js": 1
       }
     }
   },
@@ -32,7 +35,12 @@
   "engines": {
     "node": ">= 0.10.0"
   },
+  "scripts": {
+    "test": "node ./lib/tests.js"
+  },
   "bugs": {
     "url": "https://github.com/loveencounterflow/coffeenode-tex/issues"
-  }
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "coffeenode-chr@0.1.0"
 }

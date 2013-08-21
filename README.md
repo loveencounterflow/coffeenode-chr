@@ -15,11 +15,177 @@ Require as, e.g.
 
     CHR = require 'coffeenode-chr'
 
+# API
 
-# Unicode characters & codepoints
+## Overview
+
+**analyze        = ( cid\_hint, options ) ->** The many-tricks-pony of `coffeenode-chr`. It will return an
+object describing multiple aspects of the codepoint in question. Examples:
 
 
-## JavaScript & Unicode
+```coffeescript
+$ log CHR.analyze 'helo world'
+
+    { chr:    'h',                #
+      csg:    'u',                #
+      cid:    104,                #
+      fncr:   'u-latn-68',        #
+      sfncr:  'u-68',             #
+      ncr:    '&#x68;',           #
+      xncr:   '&#x68;',           #
+      rsg:    'u-latn' }          #
+````
+
+
+```coffeescript
+$ log CHR.analyze '&#x24563;'
+
+{ chr:    '&',                #
+  csg:    'u',                #
+  cid:    38,                 #
+  fncr:   'u-latn-26',        #
+  sfncr:  'u-26',             #
+  ncr:    '&#x26;',           #
+  xncr:   '&#x26;',           #
+  rsg:    'u-latn' }          #
+````
+
+
+```coffeescript
+$ log CHR.analyze '&#x24563;', mode: 'ncr'
+
+{ chr:    '𤕣',                #
+  csg:    'u',                #
+  cid:    148835,             #
+  fncr:   'u-cjk-xb-24563',   #
+  sfncr:  'u-24563',          #
+  ncr:    '&#x24563;',        #
+  xncr:   '&#x24563;',        #
+  rsg:    'u-cjk-xb' }        #
+````
+
+
+```coffeescript
+$ log CHR.analyze '&#x24563;', mode: 'xncr'
+
+{ chr:    '𤕣',                #
+  csg:    'u',                #
+  cid:    148835,             #
+  fncr:   'u-cjk-xb-24563',   #
+  sfncr:  'u-24563',          #
+  ncr:    '&#x24563;',        #
+  xncr:   '&#x24563;',        #
+  rsg:    'u-cjk-xb' }        #
+````
+
+
+```coffeescript
+$ log CHR.analyze '&jzr#x24563;'
+
+{ chr:    '&',                #
+  csg:    'u',                #
+  cid:    38,                 #
+  fncr:   'u-latn-26',        #
+  sfncr:  'u-26',             #
+  ncr:    '&#x26;',           #
+  xncr:   '&#x26;',           #
+  rsg:    'u-latn' }          #
+````
+
+
+```coffeescript
+$ log CHR.analyze '&jzr#x24563;', mode: 'ncr'
+
+{ chr:    '&',                #
+  csg:    'u',                #
+  cid:    38,                 #
+  fncr:   'u-latn-26',        #
+  sfncr:  'u-26',             #
+  ncr:    '&#x26;',           #
+  xncr:   '&#x26;',           #
+  rsg:    'u-latn' }          #
+````
+
+
+```coffeescript
+$ log CHR.analyze '&jzr#x24563;', mode: 'xncr'
+
+{ chr:    '&jzr#x24563;',     #
+  csg:    'jzr',              #
+  cid:    148835,             #
+  fncr:   'jzr-24563',        #
+  sfncr:  'jzr-24563',        #
+  ncr:    '&#x24563;',        #
+  xncr:   '&jzr#x24563;',     #
+  rsg:    null }              #
+````
+
+**as\_chr         = ( cid\_hint, options ) ->**
+
+**as\_cid         = ( cid\_hint, options ) ->**
+
+**as\_csg         = ( cid\_hint, options ) ->**
+
+**as\_fncr        = ( cid\_hint, options ) ->**
+
+**as\_ncr         = ( cid\_hint, options ) ->**
+
+**as\_range\_name  = ( cid\_hint, options ) ->**
+
+**as\_rsg         = ( cid\_hint, options ) ->**
+
+**as\_sfncr       = ( cid\_hint, options ) ->**
+
+**as\_xncr        = ( cid\_hint, options ) ->**
+
+**chrs\_of = ( text, mode ) ->**
+
+**cid\_from\_chr = ( chr, mode ) ->**
+
+**cid\_from\_fncr = ( ) ->**
+
+**cid\_from\_ncr = ( ) ->**
+
+**cid\_from\_xncr = ( ) ->**
+
+**csg\_cid\_from\_chr = ( chr, mode ) ->**
+
+**validate\_is\_cid = ( x ) ->**
+
+**validate\_is\_csg = ( x ) ->**
+
+
+\_analyze = ( csg, cid ) ->
+\_as\_fncr = ( csg, cid ) ->
+\_as\_range\_name = ( csg, cid ) ->
+\_as\_rsg = ( csg, cid ) ->
+\_as\_sfncr = ( csg, cid ) ->
+\_as\_xncr = ( csg, cid ) ->
+\_chr\_csg\_cid\_from\_chr = ( chr, mode ) ->
+\_csg\_cid\_from\_hint = ( cid\_hint, options ) ->
+\_names\_and\_ranges\_by\_csg = unicode\_blocks\_data[ 'names-and-ranges-by-csg' ]
+\_unicode\_chr\_from\_cid = ( cid ) ->
+
+\_csg\_matcher
+\_first\_chr\_matcher\_ncr
+\_first\_chr\_matcher\_plain
+\_first\_chr\_matcher\_xncr
+\_ncr\_csg\_cid\_matcher
+\_ncr\_matcher
+\_ncr\_splitter
+\_nonsurrogate\_matcher
+\_plain\_splitter
+\_surrogate\_matcher
+\_xncr\_csg\_cid\_matcher
+\_xncr\_matcher
+\_xncr\_splitter
+
+
+# Background
+
+## Unicode characters & codepoints
+
+### JavaScript & Unicode
 
 **When JavaScript was conceived and standardized** in 1994/95, the Unicode standard was still in its infancy.
 Early design plans for a Universal Character Set had argumented that 2<sup>16</sup> or even a mere
@@ -108,6 +274,15 @@ Character (which itself—confusingly—has a codepoint, `0xffd`; in essence, al
 mapped to `0xfffd` at some point on their way through the output pipeline), as they are *no legal
 codepoints* when occurring without a suitable partner.
 
+> The astute reader will notice a conundrum here: we've just proven that the character `𤕣` is stored as two
+> codepoints in JavaScript, rather than one. Still, we managed to get it from an UTF-8 encoded sourcefile
+> through the runtime and back out onto the console correctly—shouldn't JavaScript's treatment have
+> destroyed the character by splitting it up? The answer is: Yes, that should have happened, and it is
+> indeed what did happen in NodeJS versions prior to 7.7 (i believe), and also in earlier versions of
+> Chrome. Fortunately, there has been fixed by making it so that input and output routines perform
+> 'ensurrogating' and 'desurrogating' on the character streams, with the effect that Joe the Programmer has
+> one problem less now.
+
 However, the numbers shown (`0xd851` and `0xdd63`) indicate that JavaScript *can* deal with those positions,
 it just cannot print out a suitable glyph for them. Indeed, when we apply the formula for Unicode Surrogate
 Pair conversion to the first two codepoints in the critical text:
@@ -147,14 +322,14 @@ is that
 
  -->
 
-## Character Representations
+# Character Representations
 
 It is often necessary to convert between different character representations. For example, the character `強`
 may be represented as `&#x5f37;` in HTML—this can help when the source text must be edited in a
 Unicode-unfriendly environment. Likewise, the Unicode Consortium identifies codepoints using the `U+`
 notation, e.g. `U+5F37;`.
 
-### Numeric Character Representation (NCR)
+## Numeric Character Representation (NCR)
 
 The Numeric(al) Character Representation (NCR) format was invented to represent 'difficult' characters in
 SGML, a markup format designed in 1960s which became the ancestor of both XML and HTML. An NCR consists of
@@ -166,7 +341,7 @@ GURMUKHI LETTER VA, may be represented as `&#x0A35;`, `&#xA35;`, `&#x0a35;`, `&#
 flexibility of these rules and the plethora of possible variants is somewhat of a hallmark of earlier
 computing standards; other examples for this phenomenon are email- and IP-addresses.)
 
-### Unicode Character Representation (UCR)
+## Unicode Character Representation (UCR)
 
 The Unicode Consortium's Character Representation (UCR) format is used by the Unicode Consortium in its
 publications. It consists of an uppercase&nbsp;`U`, followed by a plus sign&nbsp;`+`, followed by the CID of
@@ -174,7 +349,7 @@ the character in question. The CID is invariably written out in uppercase hexade
 zeros when shorter than four digits; otherwise, it consists of five or six digits as needed. For example,
 `ਵ` is represented as `U+0A35`.
 
-### Proprietary Formats
+## Proprietary Formats
 
 When having to reference and identify characters, i personally like to write out the codepoint in a fashion
 that is both somewhat less 'formal' than NCRs and somewhat more readable, flexible and informative than
@@ -202,5 +377,9 @@ Latin-9, otherwise known as ISO 8859-15, and `w1252` for Windows Codepage 1252:
          = l9-a4
          = w1252-80
 
-O
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+
+
 
