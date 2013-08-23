@@ -212,37 +212,37 @@ alongside with suitable CSS rules that tell the browser which font to use.
 ## Private Members
 
 ```coffeescript
-\_analyze = ( csg, cid ) ->
-\_as\_fncr = ( csg, cid ) ->
-\_as\_range\_name = ( csg, cid ) ->
-\_as\_rsg = ( csg, cid ) ->
-\_as\_sfncr = ( csg, cid ) ->
-\_as\_xncr = ( csg, cid ) ->
-\_chr\_csg\_cid\_from\_chr = ( chr, mode ) ->
-\_csg\_cid\_from\_hint = ( cid\_hint, options ) ->
-\_names\_and\_ranges\_by\_csg = unicode\_blocks\_data[ 'names-and-ranges-by-csg' ]
-\_unicode\_chr\_from\_cid = ( cid ) ->
+_analyze = ( csg, cid ) ->
+_as_fncr = ( csg, cid ) ->
+_as_range_name = ( csg, cid ) ->
+_as_rsg = ( csg, cid ) ->
+_as_sfncr = ( csg, cid ) ->
+_as_xncr = ( csg, cid ) ->
+_chr_csg_cid_from_chr = ( chr, mode ) ->
+_csg_cid_from_hint = ( cid_hint, options ) ->
+_names_and_ranges_by_csg = unicode_blocks_data[ 'names-and-ranges-by-csg' ]
+_unicode_chr_from_cid = ( cid ) ->
 
-\_csg\_matcher
-\_first\_chr\_matcher\_ncr
-\_first\_chr\_matcher\_plain
-\_first\_chr\_matcher\_xncr
-\_ncr\_csg\_cid\_matcher
-\_ncr\_matcher
-\_ncr\_splitter
-\_nonsurrogate\_matcher
-\_plain\_splitter
-\_surrogate\_matcher
-\_xncr\_csg\_cid\_matcher
-\_xncr\_matcher
-\_xncr\_splitter
+_csg_matcher
+_first_chr_matcher_ncr
+_first_chr_matcher_plain
+_first_chr_matcher_xncr
+_ncr_csg_cid_matcher
+_ncr_matcher
+_ncr_splitter
+_nonsurrogate_matcher
+_plain_splitter
+_surrogate_matcher
+_xncr_csg_cid_matcher
+_xncr_matcher
+_xncr_splitter
 ````
 
 # Background
 
-## Unicode characters & codepoints
+<!-- ## Unicode characters & codepoints -->
 
-### JavaScript & Unicode
+## JavaScript & Unicode
 
 **When JavaScript was conceived and standardized** in 1994/95, the Unicode standard was still in its infancy.
 Early design plans for a Universal Character Set had argued that 2<sup>16</sup> or even a mere
