@@ -122,7 +122,7 @@ is an `&` ampersand, so all we get is a description of that character in mode `n
   rsg:    'u-latn' }
 ````
 
-When we switch to mode `xncr`,
+When we switch to mode `xncr`, the extended NCR is properly detected:
 
 ```coffeescript
 # CHR.analyze '&jzr#xe100;', mode: 'xncr'
@@ -136,6 +136,11 @@ When we switch to mode `xncr`,
   xncr: '&jzr#xe100;',      # In plain texts, databases and so on, we may wish to use this notation.
   rsg: 'jzr-cc' }
 ````
+
+This information may be used to properly render the codepoint in question, say, as
+`<span class='jzr-cc'>&#xe100;</span>`,
+alongside with suitable CSS rules that tell the browser which font to use.
+
 
 **as\_chr         = ( cid\_hint, options ) ->**
 
