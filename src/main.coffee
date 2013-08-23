@@ -173,20 +173,21 @@ binary_interval_search    = require './binary-interval-search'
   * Methods may be called with one or two arguments; the first is known as the 'CID hint', the second as
     'options'.
 
-  * The CID hint may be a number or a text; if it is a number, it is understood as a Unicode CID; if it
+  * The CID hint may be a number or a text; if it is a number, it is understood as a CID; if it
     is a text, its interpretation is subject to the `options[ 'mode' ]` setting.
 
-  * Options must be a POD with the optional members `mode` and `csg`. `mode` is *only* observed if the CID
-    hint is a text; otherwise, it is without effect. Otherwise, it may take the values of `plain`, `ncr`,
-    or `xncr`, as for `CHR.cid_from_chr`.
+  * Options must be a POD with the optional members `mode` and `csg`.
 
-  * If `csg` is set in the options, then it will override whatever the outcome of `CHR.csg_cid_from_chr`
-    w.r.t. CSG is—in other words, if you call `CHR.as_sfncr '&jzr#xe100', mode: 'xncr', csg: 'u'`, you
-    will get `u-e100`, with the numerically equivalent codepoint from another character set.
+  * `options[ 'mode' ]` is *only* observed if the CID hint is a text; it governs which kinds of character
+    references are recognized in the text. `mode` may be one of `plain`, `ncr`, or `xncr`; it defaults to
+    `plain` (no character references will be recognized).
+
+  * `options[ 'csg' ]` sets the character set sigil. If `csg` is set in the options, then it will override
+    whatever the outcome of `CHR.csg_cid_from_chr` w.r.t. CSG is—in other words, if you call
+    `CHR.as_sfncr '&jzr#xe100', mode: 'xncr', csg: 'u'`, you will get `u-e100`, with the numerically
+    equivalent codepoint from the `u` (Unicode) character set.
 
   * Before CSG and CID are returned, they will be validated for plausibility.
-
-  Notice that some functions such as `CHR.as_rsg` may return
 
   ###
   #.........................................................................................................
@@ -278,7 +279,8 @@ decG                      = ( /// (?:    ([      0-9]+)      ) /// ).source
 #-----------------------------------------------------------------------------------------------------------
 @validate_is_cid = ( x ) ->
   TYPES.validate_isa_number x
-  throw new Error "expected a non-negative integer, got #{x}" if x < 0 or ( parseInt x ) != x
+  if x < 0 or x > 0x10ffff or ( parseInt x ) != x
+    throw new Error "expected an integer between 0x0 and 0x10ffff, got #{x}"
   return null
 
 

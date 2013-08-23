@@ -19,7 +19,33 @@ Require as, e.g.
 
 ## Overview
 
-**analyze        = ( cid\_hint, options ) ->**
+Most methods of the present library accept up to two arguments, `cid_hint` and `options`. CID is short for
+'character identifier', the integer that each codepoint in coded character sets is associated with. In
+JavaScript, the `String::charCodeAt` method is responsible for returning a given character's code—its CID.
+Other than a number, methods with said signature also accept non-empty strings.
+
+* Methods may be called with one or two arguments; the first is known as the 'CID hint', the second as
+  'options'.
+
+* The CID hint may be a number or a text; if it is a number, it is understood as a CID; if it
+  is a text, its interpretation is subject to the `options[ 'mode' ]` setting. If it is a string, it will
+  be scrutinized for its first character (according to `mode`); the rest of the text will be ignored.
+
+* `options` must be a Plain Old Dictionary (a JS object) with the optional members `mode` and `csg`.
+
+* `options[ 'mode' ]` is *only* observed if the CID hint is a text; it governs which kinds of character
+  references are recognized in the text. `mode` may be one of `plain`, `ncr`, or `xncr`; it defaults to
+  `plain` (no character references will be recognized).
+
+* `options[ 'csg' ]` sets the character set sigil. If `csg` is set in the options, then it will override
+  whatever the outcome of `CHR.csg_cid_from_chr` w.r.t. CSG is—in other words, if you call
+  `CHR.as_sfncr '&jzr#xe100', mode: 'xncr', csg: 'u'`, you will get `u-e100`, with the numerically
+  equivalent codepoint from the `u` (Unicode) character set.
+
+* Before CSG and CID are returned, they will be validated for plausibility.
+
+
+### analyze        = ( cid\_hint, options ) ->
 
 The many-tricks-pony of `coffeenode-chr`. It will return an
 object describing multiple aspects of the codepoint in question. Examples:
@@ -81,7 +107,7 @@ In the above examples, the NCR `&#x24563;` was successfully decoded in modes `nc
 Two more examples to show how to reference characters outside of Unicode: First let's analyze an 'extended
 NCR' using mode `ncr`. The result is that, since `&jzr#x24563;` violates the rules for NCRs, it is not
 recognized and treated as an ordinary text (the same way browsers do it). The first character of that text
-is an `&` ampersand, so all we get is a desciption of that character in mode `ncr`:
+is an `&` ampersand, so all we get is a description of that character in mode `ncr`:
 
 ```coffeescript
 # CHR.analyze '&jzr#xe100;', mode: 'ncr'
@@ -179,7 +205,7 @@ When we switch to mode `xncr`,
 ### JavaScript & Unicode
 
 **When JavaScript was conceived and standardized** in 1994/95, the Unicode standard was still in its infancy.
-Early design plans for a Universal Character Set had argumented that 2<sup>16</sup> or even a mere
+Early design plans for a Universal Character Set had argued that 2<sup>16</sup> or even a mere
 2<sup>14</sup> codepoints should be more than sufficient to represent all characters in current use—it was
 only in 1996 that the Unicode Consortium acknowledged the need for a far bigger number of codepoints, and
 hence pushed the highest valid codepoint position from `0xffff` to `0x10ffff`; there are, consequently,
@@ -249,7 +275,7 @@ gives
     不 2 0x4e0d
     息 3 0x606f
 
-which is correct, since all codepoints are below `0xffff`. However, should or text inadvertently include
+which is correct, since all codepoints are below `0xffff`. However, should a text inadvertently include
 astral entities, the algorithm breaks down in nasty ways:
 
     var text = '𤕣古文龜';
@@ -263,14 +289,14 @@ gives
     文 3 0x6587
     龜 4 0x9f9c
 
-Like in an X-ray, we see that the string now holds *five* codepoints, in spite of there being only *four*
-characters, as in the previous one. The first two codepoints are rendered with the Unicode Replacement
+Like in an X-ray, we see that the string now holds *five* positions, in spite of there being only *four*
+characters, as in the previous one. The first two units are rendered with the Unicode Replacement
 Character (which itself—confusingly—has a codepoint, `0xffd`; in essence, all codepoints deemed illegal are
 mapped to `0xfffd` at some point on their way through the output pipeline), as they are *no legal
 codepoints* when occurring without a suitable partner.
 
 > The astute reader will notice a conundrum here: we've just proven that the character `𤕣` is stored as two
-> codepoints in JavaScript, rather than one. Still, we managed to get it from an UTF-8 encoded sourcefile
+> units in JavaScript, rather than one. Still, we managed to get it from an UTF-8 encoded sourcefile
 > through the runtime and back out onto the console correctly—shouldn't JavaScript's treatment have
 > destroyed the character by splitting it up? The answer is: Yes, that should have happened, and it is
 > indeed what did happen in NodeJS versions prior to 7.7 (i believe), and also in earlier versions of
@@ -374,7 +400,9 @@ Latin-9, otherwise known as ISO 8859-15, and `w1252` for Windows Codepage 1252:
 
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
+## Glossary
 
+**CID** (http://en.wikipedia.org/wiki/PostScript_fonts#CID)
 
 
 
