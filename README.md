@@ -76,8 +76,9 @@ Other than a number, methods with said signature also accept non-empty strings.
 
 * Before CSG and CID are returned, they will be validated for plausibility.
 
+## Public Members
 
-## `analyze = ( cid_hint, options ) ->`
+### `analyze = ( cid_hint, options ) ->`
 
 The many-tricks-pony of `coffeenode-chr`. It will return an
 object describing multiple aspects of the codepoint in question. Examples:
@@ -174,33 +175,33 @@ This information may be used to properly render the codepoint in question, say, 
 alongside with suitable CSS rules that tell the browser which font to use.
 
 
-## `as\_chr = ( cid\_hint, options ) ->`
+### `as\_chr = ( cid\_hint, options ) ->`
 
-## `as\_cid = ( cid\_hint, options ) ->`
+### `as\_cid = ( cid\_hint, options ) ->`
 
-## `as\_csg = ( cid\_hint, options ) ->`
+### `as\_csg = ( cid\_hint, options ) ->`
 
-## `as\_fncr = ( cid\_hint, options ) ->`
+### `as\_fncr = ( cid\_hint, options ) ->`
 
-## `as\_ncr = ( cid\_hint, options ) ->`
+### `as\_ncr = ( cid\_hint, options ) ->`
 
-## `as\_range\_name = ( cid\_hint, options ) ->`
+### `as\_range\_name = ( cid\_hint, options ) ->`
 
-## `as\_rsg = ( cid\_hint, options ) ->`
+### `as\_rsg = ( cid\_hint, options ) ->`
 
-## `as\_sfncr = ( cid\_hint, options ) ->`
+### `as\_sfncr = ( cid\_hint, options ) ->`
 
-## `as\_xncr = ( cid\_hint, options ) ->`
+### `as\_xncr = ( cid\_hint, options ) ->`
 
-## `chrs\_of = ( text, options ) ->`
+### `chrs\_of = ( text, options ) ->`
 
-## `cid\_from\_chr = ( chr, options ) ->`
+### `cid\_from\_chr = ( chr, options ) ->`
 
-## `csg\_cid\_from\_chr = ( chr, options ) ->`
+### `csg\_cid\_from\_chr = ( chr, options ) ->`
 
-## `validate\_is\_cid = ( x ) ->`
+### `validate\_is\_cid = ( x ) ->`
 
-## `validate\_is\_csg = ( x ) ->`
+### `validate\_is\_csg = ( x ) ->`
 <!-- **cid\_from\_fncr = ( ) ->**
 
 **cid\_from\_ncr = ( ) ->**
