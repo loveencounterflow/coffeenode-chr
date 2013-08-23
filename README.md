@@ -1,5 +1,5 @@
 
-### Front matter
+# Front matter
 
 The CoffeeNode `CHR` module (short for 'character') is a library for handling characters within NodeJS in a
 Unicode-compliant, Astral-Plane-aware fashion. It includes functions to split texts into characters,
@@ -14,6 +14,25 @@ Install as
 Require as, e.g.
 
     CHR = require 'coffeenode-chr'
+
+**Table of Contents**
+
+- [Front matter](#front-matter)
+  - [Installation](#installation)
+- [API](#api)
+  - [Overview](#overview)
+  - [analyze        = ( cid_hint, options ) ->](#analyze----------cid_hint-options---)
+- [Background](#background)
+  - [Unicode characters & codepoints](#unicode-characters--codepoints)
+    - [JavaScript & Unicode](#javascript--unicode)
+- [Character Representations](#character-representations)
+  - [Numeric Character Representation (NCR)](#numeric-character-representation-ncr)
+  - [Unicode Character Representation (UCR)](#unicode-character-representation-ucr)
+  - [Proprietary Formats](#proprietary-formats)
+  - [Glossary](#glossary)
+
+> *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
 
 # API
 
@@ -45,7 +64,7 @@ Other than a number, methods with said signature also accept non-empty strings.
 * Before CSG and CID are returned, they will be validated for plausibility.
 
 
-### analyze        = ( cid\_hint, options ) ->
+## analyze        = ( cid\_hint, options ) ->
 
 The many-tricks-pony of `coffeenode-chr`. It will return an
 object describing multiple aspects of the codepoint in question. Examples:
