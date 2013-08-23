@@ -175,33 +175,33 @@ This information may be used to properly render the codepoint in question, say, 
 alongside with suitable CSS rules that tell the browser which font to use.
 
 
-### `as\_chr = ( cid\_hint, options ) ->`
+### `as_chr = ( cid_hint, options ) ->`
 
-### `as\_cid = ( cid\_hint, options ) ->`
+### `as_cid = ( cid_hint, options ) ->`
 
-### `as\_csg = ( cid\_hint, options ) ->`
+### `as_csg = ( cid_hint, options ) ->`
 
-### `as\_fncr = ( cid\_hint, options ) ->`
+### `as_fncr = ( cid_hint, options ) ->`
 
-### `as\_ncr = ( cid\_hint, options ) ->`
+### `as_ncr = ( cid_hint, options ) ->`
 
-### `as\_range\_name = ( cid\_hint, options ) ->`
+### `as_range_name = ( cid_hint, options ) ->`
 
-### `as\_rsg = ( cid\_hint, options ) ->`
+### `as_rsg = ( cid_hint, options ) ->`
 
-### `as\_sfncr = ( cid\_hint, options ) ->`
+### `as_sfncr = ( cid_hint, options ) ->`
 
-### `as\_xncr = ( cid\_hint, options ) ->`
+### `as_xncr = ( cid_hint, options ) ->`
 
-### `chrs\_of = ( text, options ) ->`
+### `chrs_of = ( text, options ) ->`
 
-### `cid\_from\_chr = ( chr, options ) ->`
+### `cid_from_chr = ( chr, options ) ->`
 
-### `csg\_cid\_from\_chr = ( chr, options ) ->`
+### `csg_cid_from_chr = ( chr, options ) ->`
 
-### `validate\_is\_cid = ( x ) ->`
+### `validate_is_cid = ( x ) ->`
 
-### `validate\_is\_csg = ( x ) ->`
+### `validate_is_csg = ( x ) ->`
 <!-- **cid\_from\_fncr = ( ) ->**
 
 **cid\_from\_ncr = ( ) ->**
