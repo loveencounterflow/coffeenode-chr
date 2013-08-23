@@ -21,7 +21,21 @@ Require as, e.g.
   - [Installation](#installation)
 - [API](#api)
   - [Overview](#overview)
-  - [analyze        = ( cid_hint, options ) ->](#analyze----------cid_hint-options---)
+  - [analyze        = ( cid\_hint, options ) ->](#analyze----------cid_hint-options---)
+  - [as_chr         = ( cid_hint, options ) ->](#as_chr-----------cid_hint-options---)
+  - [as_cid         = ( cid_hint, options ) ->](#as_cid-----------cid_hint-options---)
+  - [as_csg         = ( cid_hint, options ) ->](#as_csg-----------cid_hint-options---)
+  - [as_fncr        = ( cid_hint, options ) ->](#as_fncr----------cid_hint-options---)
+  - [as_ncr         = ( cid_hint, options ) ->](#as_ncr-----------cid_hint-options---)
+  - [as_range_name  = ( cid_hint, options ) ->](#as_range_name----cid_hint-options---)
+  - [as_rsg         = ( cid_hint, options ) ->](#as_rsg-----------cid_hint-options---)
+  - [as_sfncr       = ( cid_hint, options ) ->](#as_sfncr---------cid_hint-options---)
+  - [as_xncr        = ( cid_hint, options ) ->](#as_xncr----------cid_hint-options---)
+  - [chrs_of = ( text, options ) ->](#chrs_of---text-options---)
+  - [cid_from_chr = ( chr, options ) ->](#cid_from_chr---chr-options---)
+  - [csg_cid_from_chr = ( chr, options ) ->](#csg_cid_from_chr---chr-options---)
+  - [validate_is_cid = ( x ) ->](#validate_is_cid---x---)
+  - [validate_is_csg = ( x ) ->](#validate_is_csg---x---)
 - [Background](#background)
   - [Unicode characters & codepoints](#unicode-characters--codepoints)
     - [JavaScript & Unicode](#javascript--unicode)
@@ -64,7 +78,7 @@ Other than a number, methods with said signature also accept non-empty strings.
 * Before CSG and CID are returned, they will be validated for plausibility.
 
 
-## `analyze        = ( cid\_hint, options ) ->`
+## `analyze        = ( cid\_hint, options ) ->
 
 The many-tricks-pony of `coffeenode-chr`. It will return an
 object describing multiple aspects of the codepoint in question. Examples:
