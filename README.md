@@ -39,11 +39,10 @@ Require as, e.g.
 - [Background](#background)
   - [Unicode characters & codepoints](#unicode-characters--codepoints)
     - [JavaScript & Unicode](#javascript--unicode)
-- [Character Representations](#character-representations)
+- [Glossary](#glossary)
   - [Numeric Character Representation (NCR)](#numeric-character-representation-ncr)
   - [Unicode Character Representation (UCR)](#unicode-character-representation-ucr)
   - [Proprietary Formats](#proprietary-formats)
-  - [Glossary](#glossary)
 
 > *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
@@ -78,7 +77,7 @@ Other than a number, methods with said signature also accept non-empty strings.
 * Before CSG and CID are returned, they will be validated for plausibility.
 
 
-## `analyze        = ( cid\_hint, options ) ->
+## `analyze = ( cid\_hint, options ) ->
 
 The many-tricks-pony of `coffeenode-chr`. It will return an
 object describing multiple aspects of the codepoint in question. Examples:
@@ -175,23 +174,23 @@ This information may be used to properly render the codepoint in question, say, 
 alongside with suitable CSS rules that tell the browser which font to use.
 
 
-## as\_chr         = ( cid\_hint, options ) ->
+## as\_chr = ( cid\_hint, options ) ->
 
-## as\_cid         = ( cid\_hint, options ) ->
+## as\_cid = ( cid\_hint, options ) ->
 
-## as\_csg         = ( cid\_hint, options ) ->
+## as\_csg = ( cid\_hint, options ) ->
 
-## as\_fncr        = ( cid\_hint, options ) ->
+## as\_fncr = ( cid\_hint, options ) ->
 
-## as\_ncr         = ( cid\_hint, options ) ->
+## as\_ncr = ( cid\_hint, options ) ->
 
-## as\_range\_name  = ( cid\_hint, options ) ->
+## as\_range\_name = ( cid\_hint, options ) ->
 
-## as\_rsg         = ( cid\_hint, options ) ->
+## as\_rsg = ( cid\_hint, options ) ->
 
-## as\_sfncr       = ( cid\_hint, options ) ->
+## as\_sfncr = ( cid\_hint, options ) ->
 
-## as\_xncr        = ( cid\_hint, options ) ->
+## as\_xncr = ( cid\_hint, options ) ->
 
 ## chrs\_of = ( text, options ) ->
 
@@ -381,14 +380,16 @@ is that
 
  -->
 
-# Character Representations
+# Glossary
+
+## Character Representations
 
 It is often necessary to convert between different character representations. For example, the character `強`
 may be represented as `&#x5f37;` in HTML—this can help when the source text must be edited in a
 Unicode-unfriendly environment. Likewise, the Unicode Consortium identifies codepoints using the `U+`
 notation, e.g. `U+5F37;`.
 
-## Numeric Character Representation (NCR)
+### Numeric Character Representation (NCR)
 
 The Numeric(al) Character Representation (NCR) format was invented to represent 'difficult' characters in
 SGML, a markup format designed in 1960s which became the ancestor of both XML and HTML. An NCR consists of
@@ -400,7 +401,7 @@ GURMUKHI LETTER VA, may be represented as `&#x0A35;`, `&#xA35;`, `&#x0a35;`, `&#
 flexibility of these rules and the plethora of possible variants is somewhat of a hallmark of earlier
 computing standards; other examples for this phenomenon are email- and IP-addresses.)
 
-## Unicode Character Representation (UCR)
+### Unicode Character Representation (UCR)
 
 The Unicode Consortium's Character Representation (UCR) format is used by the Unicode Consortium in its
 publications. It consists of an uppercase&nbsp;`U`, followed by a plus sign&nbsp;`+`, followed by the CID of
@@ -408,13 +409,13 @@ the character in question. The CID is invariably written out in uppercase hexade
 zeros when shorter than four digits; otherwise, it consists of five or six digits as needed. For example,
 `ਵ` is represented as `U+0A35`.
 
-## Proprietary Formats
+### Friendly NCRs
 
-When having to reference and identify characters, i personally like to write out the codepoint in a fashion
-that is both somewhat less 'formal' than NCRs and somewhat more readable, flexible and informative than
-UCRs; i call this format FNCR for Friendly Numeric Characer Representation. It is mainly intended for use
-in publications such as character references, where a notice should be made for the reader how to decode
-the constituent parts of the notation.
+When having to reference and identify characters in explanatory texts, i personally like to write out the
+codepoint in a fashion that is both somewhat less 'formal' than NCRs and somewhat more readable, flexible
+and informative than UCRs; i call this format FNCR for Friendly Numeric Characer Representation. It is
+mainly intended for use in publications such as character references, where a notice should be made for the
+reader how to decode the constituent parts of the notation.
 
 The general format of an FNCR is as follows: first, the character set is indicated by a short string of
 letters, `u` being reserved for Unicode; this part is called the Character Set siGil (CSG). Then, the
@@ -430,17 +431,20 @@ by hyphens `-`. Here are a few examples:
 RSGs are important for big character sets such as Unicode, where tens of thousands of characters are
 distributed over hundred of blocks—it is easy to loose orientation. Since FNCRs include a character set
 sigil, codepoints from multiple character sets may be identified; for example, here we use `l9` to stand for
-Latin-9, otherwise known as ISO 8859-15, and `w1252` for Windows Codepage 1252:
+Latin-9, otherwise known as ISO 8859-15, and `cp1252` for Windows Codepage 1252:
 
     €      u-cur-20ac
          = l9-a4
-         = w1252-80
+         = cp1252-80
 
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-## Glossary
+### Extended NCRs
 
-**CID** (http://en.wikipedia.org/wiki/PostScript_fonts#CID)
+## Other Terms
+
+## Character Identifier (CID) (http://en.wikipedia.org/wiki/PostScript_fonts#CID)
+## Character Set Sigil (CSG)
 
 
 
