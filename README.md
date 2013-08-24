@@ -63,10 +63,11 @@ Other than a number, methods with said signature also accept non-empty strings.
   is a text, its interpretation is subject to the `options[ 'mode' ]` setting. If it is a string, it will
   be scrutinized for its first character (according to `mode`); the rest of the text will be ignored.
 
-* `options` must be a Plain Old Dictionary (a JS object) with the optional members `mode` and `csg`.
+* `options` must be a Plain Old Dictionary (a JS object) with the optional members `input`, `output`, and
+  `csg`.
 
-* `options[ 'mode' ]` is *only* observed if the CID hint is a text; it governs which kinds of character
-  references are recognized in the text. `mode` may be one of `plain`, `ncr`, or `xncr`; it defaults to
+* `options[ 'input' ]` is *only* observed if the CID hint is a text; it governs which kinds of character
+  references are recognized in the text. `input` may be one of `plain`, `ncr`, or `xncr`; it defaults to
   `plain` (no character references will be recognized).
 
 * `options[ 'csg' ]` sets the character set sigil. If `csg` is set in the options, then it will override
@@ -96,11 +97,11 @@ object describing multiple aspects of the codepoint in question. Examples:
   rsg:    'u-latn' }          # The 'range sigil', i.e. Unicode block identifier.
 ````
 
-When using Numerical Character References (NCRs), it is important to choose the right 'mode' (namely, `ncr`
-or `xncr`):
+When using Numerical Character References (NCRs), it is important to choose the right input mode (namely,
+`ncr` or `xncr`):
 
 ```coffeescript
-# CHR.analyze '&#x24563;' # or use mode: 'plain'
+# CHR.analyze '&#x24563;' # same as `CHR.analyze '&#x24563;', input: 'plain'`
 
 { chr:    '&',
   csg:    'u',
@@ -111,7 +112,7 @@ or `xncr`):
   xncr:   '&#x26;',
   rsg:    'u-latn' }
 
-# CHR.analyze '&#x24563;', mode: 'ncr'
+# CHR.analyze '&#x24563;', input: 'ncr'
 
 { chr:    '𤕣',
   csg:    'u',
@@ -122,7 +123,7 @@ or `xncr`):
   xncr:   '&#x24563;',
   rsg:    'u-cjk-xb' }
 
-# CHR.analyze '&#x24563;', mode: 'xncr'
+# CHR.analyze '&#x24563;', input: 'xncr'
 
 { chr:    '𤕣',
   csg:    'u',
@@ -134,7 +135,7 @@ or `xncr`):
   rsg:    'u-cjk-xb' }
 ````
 
-In the above examples, the NCR `&#x24563;` was successfully decoded in modes `ncr` and `xncr`, while in
+In the above examples, the NCR `&#x24563;` was successfully decoded in modes input `ncr` and `xncr`, while in
 `plain` mode, `&` counts as the first character of the text.
 
 Two more examples to show how to reference characters outside of Unicode: First let's analyze an 'extended
@@ -143,7 +144,7 @@ recognized and treated as an ordinary text (the same way browsers do it). The fi
 is an `&` ampersand, so all we get is a description of that character in mode `ncr`:
 
 ```coffeescript
-# CHR.analyze '&jzr#xe100;', mode: 'ncr'
+# CHR.analyze '&jzr#xe100;', input: 'ncr'
 
 { chr:    '&',
   csg:    'u',
@@ -158,7 +159,7 @@ is an `&` ampersand, so all we get is a description of that character in mode `n
 When we switch to mode `xncr`, the extended NCR is properly detected:
 
 ```coffeescript
-# CHR.analyze '&jzr#xe100;', mode: 'xncr'
+# CHR.analyze '&jzr#xe100;', input: 'xncr'
 
 { chr: '&jzr#xe100;',       # the XNCR has been recognized.
   csg: 'jzr',               # The CSG identifies the Jizura Character Set (JZRCS).
@@ -193,7 +194,20 @@ alongside with suitable CSS rules that tell the browser which font to use.
 
 ### `as_xncr = ( cid_hint, options ) ->`
 
-### `chrs_of = ( text, options ) ->`
+### `chrs_from_text = ( text, options ) ->`
+
+Given a `text` and `options`, return a list of characters. The only relevant setting of `options` is `mode`,
+which governs (as in most methods) whether NCRs/XNCRs are recognized. When applying a CHR method such as
+`CHR.analyze` to each element of the resulting list (with the same `mode` setting), a complete analysis of
+a text can be perfomed.
+
+### `chunks_from_text = ( text, options ) ->`
+
+Given a `text` and `options` (of which only `mode` is relevant here), return a list of `CHR/chunk`
+objects (as returned by `CHR._new_chunk`) that describes stretches of characters with codepoints in the
+same 'range' (Unicode block).
+
+### `html_from_text = ( text, options ) ->`
 
 ### `cid_from_chr = ( chr, options ) ->`
 
@@ -436,7 +450,7 @@ distributed over hundred of blocks—it is easy to loose orientation. Since FNCR
 sigil, codepoints from multiple character sets may be identified; for example, here we use `l9` to stand for
 Latin-9, otherwise known as ISO 8859-15, and `cp1252` for Windows Codepage 1252:
 
-    €      u-cur-20ac
+    €    = u-cur-20ac
          = l9-a4
          = cp1252-80
 
@@ -446,8 +460,15 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 ## Other Terms
 
-## Character Identifier (CID) (http://en.wikipedia.org/wiki/PostScript_fonts#CID)
-## Character Set Sigil (CSG)
+### Character Identifier (CID)
+
+Probably differs from the concept as used by [Adobe](http://en.wikipedia.org/wiki/PostScript_fonts#CID)
+
+### Codepoint (Codeposition)
+
+### Codeunit
+
+### Character Set Sigil (CSG)
 
 
 

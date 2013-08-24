@@ -16,45 +16,107 @@ binary_interval_search    = require './binary-interval-search'
 #===========================================================================================================
 # SPLIT TEXT INTO CHARACTERS
 #-----------------------------------------------------------------------------------------------------------
-@chrs_of = ( text, options ) ->
+@chrs_from_text = ( text, options ) ->
   return [] if text.length is 0
   #.........................................................................................................
-  switch mode = options?[ 'mode' ] ? 'plain'
+  switch input_mode = options?[ 'input' ] ? 'plain'
     when 'plain'  then splitter = @_plain_splitter
     when 'ncr'    then splitter = @_ncr_splitter
     when 'xncr'   then splitter = @_xncr_splitter
-    else throw new Error "unknown mode: #{rpr mode}"
+    else throw new Error "unknown input mode: #{rpr input_mode}"
   #.........................................................................................................
   return ( text.split splitter ).filter ( element, idx ) -> return element.length isnt 0
 
+#-----------------------------------------------------------------------------------------------------------
+@_new_chunk = ( csg, rsg, chrs ) ->
+  R =
+    '~isa':     'CHR/chunk'
+    'csg':      csg
+    'rsg':      rsg
+    # 'chrs':     chrs
+    'text':     chrs.join ''
+  #.........................................................................................................
+  return R
+
+#-----------------------------------------------------------------------------------------------------------
+@chunks_from_text = ( text, options ) ->
+  ### Given a `text` and `options` (of which `csg` is irrelevant here), return a list of `CHR/chunk`
+  objects (as returned by `CHR._new_chunk`) that describes stretches of characters with codepoints in the
+  same 'range' (Unicode block).
+  ###
+  R           = []
+  return R if text.length is 0
+  last_csg    = null
+  last_rsg    = null
+  chrs        = []
+  #.........................................................................................................
+  switch output_mode = options?[ 'output' ] ? 'plain'
+    when 'plain'
+      transform_output = ( chr ) ->
+        return chr
+    when 'html'
+      transform_output = ( chr ) ->
+        return switch chr
+          when '&' then '&amp;'
+          when '<' then '&lt;'
+          when '>' then '&gt;'
+          else chr
+    else
+      throw new Error "unknown output mode: #{rpr output_mode}"
+  #.........................................................................................................
+  for chr in @chrs_from_text text, options
+    description = @analyze chr, options
+    { csg
+      rsg }     = description
+    chr         = description[ if csg is 'u' then 'chr' else 'ncr' ]
+    if rsg isnt last_rsg
+      R.push @_new_chunk last_csg, last_rsg, chrs if chrs.length > 0
+      last_csg    = csg
+      last_rsg    = rsg
+      chrs        = []
+    #.......................................................................................................
+    chrs.push transform_output chr
+  #.........................................................................................................
+  R.push @_new_chunk last_csg, last_rsg, chrs if chrs.length > 0
+  return R
+
+#-----------------------------------------------------------------------------------------------------------
+@html_from_text = ( text, options ) ->
+  R = []
+  #.........................................................................................................
+  input_mode  = options?[ 'input' ] ? 'plain'
+  chunks      = @chunks_from_text text, input: input_mode, output: 'html'
+  for chunk in chunks
+    R.push """<span class="#{chunk[ 'rsg' ]}">#{chunk[ 'text' ]}</span>"""
+  #.........................................................................................................
+  return R.join ''
 
 #===========================================================================================================
 # CONVERTING TO CID
 #-----------------------------------------------------------------------------------------------------------
 @cid_from_chr = ( chr, options ) ->
-  mode = options?[ 'mode' ] ? 'plain'
-  return ( @_chr_csg_cid_from_chr chr, mode )[ 2 ]
+  input_mode = options?[ 'input' ] ? 'plain'
+  return ( @_chr_csg_cid_from_chr chr, input_mode )[ 2 ]
 
 #-----------------------------------------------------------------------------------------------------------
 @csg_cid_from_chr = ( chr, options ) ->
-  mode = options?[ 'mode' ] ? 'plain'
-  return ( @_chr_csg_cid_from_chr chr, mode )[ 1 .. ]
+  input_mode = options?[ 'input' ] ? 'plain'
+  return ( @_chr_csg_cid_from_chr chr, input_mode )[ 1 .. ]
 
 #-----------------------------------------------------------------------------------------------------------
-@_chr_csg_cid_from_chr = ( chr, mode ) ->
+@_chr_csg_cid_from_chr = ( chr, input_mode ) ->
   ### Given a text with one or more characters, return the first character, its CSG, and its CID (as a
-  non-negative integer). Additionally, a `mode` may be given as either `plain`, `ncr`, or `xncr`. In plain
-  mode,
+  non-negative integer). Additionally, an input mode may be given as either `plain`, `ncr`, or `xncr`.
   ###
   #.........................................................................................................
   throw new Error "unable to obtain CID from empty string" if chr.length is 0
   #.........................................................................................................
-  mode ?= 'plain'
-  switch mode
+  input_mode ?= 'plain'
+  switch input_mode
     when 'plain'  then matcher = @_first_chr_matcher_plain
     when 'ncr'    then matcher = @_first_chr_matcher_ncr
     when 'xncr'   then matcher = @_first_chr_matcher_xncr
-    else throw new Error "unknown mode: #{rpr mode}"
+    else throw new Error "unknown input mode: #{rpr input_mode}"
   #.........................................................................................................
   match     = chr.match matcher
   throw new Error "illegal character sequence in #{rpr chr}" unless match?
@@ -119,6 +181,7 @@ binary_interval_search    = require './binary-interval-search'
     ncr         = @_as_xncr 'u', cid
   #.........................................................................................................
   R =
+    '~isa':     'CHR/chr-description'
     'chr':      chr
     'csg':      csg
     'cid':      cid
@@ -174,17 +237,17 @@ binary_interval_search    = require './binary-interval-search'
     'options'.
 
   * The CID hint may be a number or a text; if it is a number, it is understood as a CID; if it
-    is a text, its interpretation is subject to the `options[ 'mode' ]` setting.
+    is a text, its interpretation is subject to the `options[ 'input' ]` setting.
 
-  * Options must be a POD with the optional members `mode` and `csg`.
+  * Options must be a POD with the optional members `input` and `csg`.
 
-  * `options[ 'mode' ]` is *only* observed if the CID hint is a text; it governs which kinds of character
-    references are recognized in the text. `mode` may be one of `plain`, `ncr`, or `xncr`; it defaults to
+  * `options[ 'input' ]` is *only* observed if the CID hint is a text; it governs which kinds of character
+    references are recognized in the text. `input` may be one of `plain`, `ncr`, or `xncr`; it defaults to
     `plain` (no character references will be recognized).
 
   * `options[ 'csg' ]` sets the character set sigil. If `csg` is set in the options, then it will override
     whatever the outcome of `CHR.csg_cid_from_chr` w.r.t. CSG is—in other words, if you call
-    `CHR.as_sfncr '&jzr#xe100', mode: 'xncr', csg: 'u'`, you will get `u-e100`, with the numerically
+    `CHR.as_sfncr '&jzr#xe100', input: 'xncr', csg: 'u'`, you will get `u-e100`, with the numerically
     equivalent codepoint from the `u` (Unicode) character set.
 
   * Before CSG and CID are returned, they will be validated for plausibility.
@@ -194,10 +257,10 @@ binary_interval_search    = require './binary-interval-search'
   switch type = TYPES.type_of options
     when 'null', 'jsundefined'
       csg_of_options  = null
-      mode            = null
+      input_mode      = null
     when 'pod'
       csg_of_options  = options[ 'csg' ]
-      mode            = options[ 'mode' ]
+      input_mode      = options[ 'input' ]
     else
       throw new Error "expected a POD as second argument, got a #{type}"
   #.........................................................................................................
@@ -207,7 +270,7 @@ binary_interval_search    = require './binary-interval-search'
       cid             = cid_hint
     when 'text'
       [ csg_of_cid_hint
-        cid             ] = @csg_cid_from_chr cid_hint, mode: mode
+        cid             ] = @csg_cid_from_chr cid_hint, input: input_mode
     else
       throw new Error "expected a text or a number as first argument, got a #{type}"
   #.........................................................................................................
