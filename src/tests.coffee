@@ -100,7 +100,7 @@ assert.strictEqual ( CHR.cid_from_chr '&jzr#x678;', input: 'xncr', ), 0x678
 assert.strictEqual ( CHR.html_from_text 'helo wörld'                         ), """<span class="u-latn">helo w</span><span class="u-latn-1">ö</span><span class="u-latn">rld</span>"""
 assert.strictEqual ( CHR.html_from_text 'helo &#x24563; wörld'               ), """<span class="u-latn">helo &amp;#x24563; w</span><span class="u-latn-1">ö</span><span class="u-latn">rld</span>"""
 assert.strictEqual ( CHR.html_from_text 'helo &#x24563; wörld', input: 'xncr'), """<span class="u-latn">helo </span><span class="u-cjk-xb">𤕣</span><span class="u-latn"> w</span><span class="u-latn-1">ö</span><span class="u-latn">rld</span>"""
-assert.strictEqual ( CHR.html_from_text '&jzr#xe101; & you', input: 'xncr'   ), """<span class="jzr-cc">&#xe101;</span><span class="u-latn"> &amp; you</span>"""
+assert.strictEqual ( CHR.html_from_text '&jzr#xe101; & you', input: 'xncr'   ), """<span class="jzr-fig">&#xe101;</span><span class="u-latn"> &amp; you</span>"""
 
 
 # log '-------------------------------'
@@ -173,15 +173,15 @@ assert.strictEqual ( CHR.as_rsg        '&jzr#xe100;',  input: 'ncr' ), 'u-latn'
 assert.strictEqual ( CHR.as_range_name '&#xe100;',     input: 'xncr' ), 'Private Use Area'
 assert.strictEqual ( CHR.as_range_name '&jzr#xe100;',  input: 'xncr' ), 'Jizura Character Components'
 assert.strictEqual ( CHR.as_rsg        '&#xe100;',     input: 'xncr' ), 'u-pua'
-assert.strictEqual ( CHR.as_rsg        '&jzr#xe100;',  input: 'xncr' ), 'jzr-cc'
+assert.strictEqual ( CHR.as_rsg        '&jzr#xe100;',  input: 'xncr' ), 'jzr-fig'
 
 assert.throws ( -> CHR.as_rsg        '&unknown#xe100;',  input: 'xncr' ), "Error: unknown CSG: 'unknown'"
 assert.strictEqual ( CHR.as_rsg      '&jzr#xe100;',  input:  'xncr', csg: 'u'   ), 'u-pua'
 assert.strictEqual ( CHR.as_rsg      '&#xe100;',     input:  'xncr', csg: 'u'   ), 'u-pua'
-assert.strictEqual ( CHR.as_rsg      '&#xe100;',     input:  'xncr', csg: 'jzr' ), 'jzr-cc'
+assert.strictEqual ( CHR.as_rsg      '&#xe100;',     input:  'xncr', csg: 'jzr' ), 'jzr-fig'
 assert.strictEqual ( CHR.as_rsg      '&#x1;',        input:  'xncr', csg: 'jzr' ), null
 assert.strictEqual ( CHR.as_fncr     '&#x1;',        input:  'xncr', csg: 'jzr' ), 'jzr-1'
-assert.strictEqual ( CHR.as_fncr     '&#xe123;',     input:  'xncr', csg: 'jzr' ), 'jzr-cc-e123'
+assert.strictEqual ( CHR.as_fncr     '&#xe123;',     input:  'xncr', csg: 'jzr' ), 'jzr-fig-e123'
 assert.strictEqual ( CHR.as_fncr     '𤕣',           input:  'xncr'             ), 'u-cjk-xb-24563'
 
 assert.strictEqual ( CHR.as_cid      '&jzr#xe100;',  input: 'xncr'              ), 0xe100
@@ -209,13 +209,13 @@ assert.deepEqual ( CHR.chunks_from_text 'ab&#x63;d', input: 'ncr'               
 assert.deepEqual ( CHR.chunks_from_text 'ab&#x63;d', input: 'xncr'                       ), [{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"abcd"}]
 assert.deepEqual ( CHR.chunks_from_text 'ab&jzr#xe063;d'                                 ), [{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"ab&jzr#xe063;d"}]
 assert.deepEqual ( CHR.chunks_from_text 'ab&jzr#xe063;d', input: 'ncr'                   ), [{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"ab&jzr#xe063;d"}]
-assert.deepEqual ( CHR.chunks_from_text 'ab&jzr#xe063;d', input: 'xncr'                  ), [{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"ab"},{"~isa":"CHR/chunk","csg":"jzr","rsg":"jzr-cc","text":"&#xe063;"},{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"d"}]
+assert.deepEqual ( CHR.chunks_from_text 'ab&jzr#xe063;d', input: 'xncr'                  ), [{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"ab"},{"~isa":"CHR/chunk","csg":"jzr","rsg":"jzr-fig","text":"&#xe063;"},{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"d"}]
 assert.deepEqual ( CHR.chunks_from_text 'helo wörld', output: 'html'                     ), [{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"helo w"},{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn-1","text":"ö"},{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"rld"}]
 assert.deepEqual ( CHR.chunks_from_text '1 < 2', output: 'html'                          ), [{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"1 &lt; 2"}]
 assert.deepEqual ( CHR.chunks_from_text '2 > 1', output: 'html'                          ), [{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"2 &gt; 1"}]
 assert.deepEqual ( CHR.chunks_from_text 'me & you', output: 'html'                       ), [{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"me &amp; you"}]
 assert.deepEqual ( CHR.chunks_from_text 'me &amp; you', output: 'html'                   ), [{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"me &amp;amp; you"}]
-assert.deepEqual ( CHR.chunks_from_text 'ab&jzr#xe063;d', input: 'xncr', output: 'html'  ), [{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"ab"},{"~isa":"CHR/chunk","csg":"jzr","rsg":"jzr-cc","text":"&#xe063;"},{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"d"}]
+assert.deepEqual ( CHR.chunks_from_text 'ab&jzr#xe063;d', input: 'xncr', output: 'html'  ), [{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"ab"},{"~isa":"CHR/chunk","csg":"jzr","rsg":"jzr-fig","text":"&#xe063;"},{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"d"}]
 
 # log CHR.analyze '&jzr#xe100;', input: 'ncr'
 # log CHR.analyze '&jzr#xe100;', input: 'xncr'

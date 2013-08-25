@@ -7,8 +7,8 @@ TYPES                     = require 'coffeenode-types'
 TRM                       = require 'coffeenode-trm'
 rpr                       = TRM.rpr.bind TRM
 #...........................................................................................................
-unicode_blocks_data       = require './unicode-blocks-data'
-@_names_and_ranges_by_csg = unicode_blocks_data[ 'names-and-ranges-by-csg' ]
+character_sets_and_ranges = require './character-sets-and-ranges'
+@_names_and_ranges_by_csg = character_sets_and_ranges[ 'names-and-ranges-by-csg' ]
 binary_interval_search    = require './binary-interval-search'
 
 

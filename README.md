@@ -172,15 +172,15 @@ When we switch to mode `xncr`, the extended NCR is properly detected:
 { chr: '&jzr#xe100;',       # the XNCR has been recognized.
   csg: 'jzr',               # The CSG identifies the Jizura Character Set (JZRCS).
   cid: 57600,               # CID is 57600 = 0xe100
-  fncr: 'jzr-cc-e100',      # The FNCR tells us that the codepoint is in the 'cc' block of the JZRCS.
+  fncr: 'jzr-fig-e100',     # The FNCR tells us that the codepoint is in the 'fig' block of the JZRCS.
   sfncr: 'jzr-e100',
   ncr: '&#xe100;',          # When rendering to a web page, we must use standard NCRs.
   xncr: '&jzr#xe100;',      # In plain texts, databases and so on, we may wish to use this notation.
-  rsg: 'jzr-cc' }
+  rsg: 'jzr-fig' }
 ````
 
 This information may be used to properly render the codepoint in question, say, as
-`<span class='jzr-cc'>&#xe100;</span>`,
+`<span class='jzr-fig'>&#xe100;</span>`,
 alongside with suitable CSS rules that tell the browser which font to use.
 
 
