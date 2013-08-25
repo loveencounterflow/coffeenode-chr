@@ -27,7 +27,8 @@
         "lib/tests.js": 1,
         "lib/binary-interval-search.js": 1,
         "lib/unicde-blocks-data.js": 1,
-        "lib/unicode-blocks-data.js": 1
+        "lib/unicode-blocks-data.js": 1,
+        "lib/character-sets-and-ranges.js": 1
       }
     }
   },
@@ -41,5 +42,6 @@
   "bugs": {
     "url": "https://github.com/loveencounterflow/coffeenode-tex/issues"
   },
-  "_id": "coffeenode-chr@0.1.0"
+  "_id": "coffeenode-chr@0.1.0",
+  "readme": "ERROR: No README data found!"
 }
