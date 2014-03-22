@@ -274,7 +274,7 @@ a hyphen, as in `u-latn-b` standing for Unicode range `Latin Extended-B`.
 
 
 #===========================================================================================================
-# UNICODE
+# JIZURA
 #-----------------------------------------------------------------------------------------------------------
 #                         CSG
 @[ 'names-and-ranges-by-csg' ][ 'jzr' ] = [
@@ -285,6 +285,46 @@ a hyphen, as in `u-latn-b` standing for Unicode range `Latin Extended-B`.
   #.........................................................................................................
   ]
 
+
+#===========================================================================================================
+# OTHERS
+#-----------------------------------------------------------------------------------------------------------
+### wholesale addition of the character sets i'm encountering in my work: ###
+@[ 'names-and-ranges-by-csg' ][ 'aj'        ] = [ [ '(Glyphs)', 'aj',        0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'b'         ] = [ [ '(Glyphs)', 'b',         0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'c1'        ] = [ [ '(Glyphs)', 'c1',        0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'c2'        ] = [ [ '(Glyphs)', 'c2',        0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'c3'        ] = [ [ '(Glyphs)', 'c3',        0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'c4'        ] = [ [ '(Glyphs)', 'c4',        0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'c5'        ] = [ [ '(Glyphs)', 'c5',        0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'c6'        ] = [ [ '(Glyphs)', 'c6',        0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'c7'        ] = [ [ '(Glyphs)', 'c7',        0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'cb'        ] = [ [ '(Glyphs)', 'cb',        0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'cdp'       ] = [ [ '(Glyphs)', 'cdp',       0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'gt'        ] = [ [ '(Glyphs)', 'gt',        0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'gtk'       ] = [ [ '(Glyphs)', 'gtk',       0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'hdib'      ] = [ [ '(Glyphs)', 'hdib',      0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'hzk1'      ] = [ [ '(Glyphs)', 'hzk1',      0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'hzk2'      ] = [ [ '(Glyphs)', 'hzk2',      0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'hzk4'      ] = [ [ '(Glyphs)', 'hzk4',      0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'hzk6'      ] = [ [ '(Glyphs)', 'hzk6',      0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'hzk7'      ] = [ [ '(Glyphs)', 'hzk7',      0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'hzk8'      ] = [ [ '(Glyphs)', 'hzk8',      0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'hzk9'      ] = [ [ '(Glyphs)', 'hzk9',      0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'j83'       ] = [ [ '(Glyphs)', 'j83',       0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'j90'       ] = [ [ '(Glyphs)', 'j90',       0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'jsp'       ] = [ [ '(Glyphs)', 'jsp',       0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'jx1'       ] = [ [ '(Glyphs)', 'jx1',       0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'jx2'       ] = [ [ '(Glyphs)', 'jx2',       0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'jx3'       ] = [ [ '(Glyphs)', 'jx3',       0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'k0'        ] = [ [ '(Glyphs)', 'k0',        0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'mcs'       ] = [ [ '(Glyphs)', 'mcs',       0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'morohashi' ] = [ [ '(Glyphs)', 'morohashi', 0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'hzk12'     ] = [ [ '(Glyphs)', 'hzk12',     0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'hzk3'      ] = [ [ '(Glyphs)', 'hzk3',      0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'hzk3'      ] = [ [ '(Glyphs)', 'hzk3',      0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'jc3'       ] = [ [ '(Glyphs)', 'jc3',       0x0000, 0xffffffff, ] ]
+@[ 'names-and-ranges-by-csg' ][ 'rui6'      ] = [ [ '(Glyphs)', 'rui6',      0x0000, 0xffffffff, ] ]
 
 ############################################################################################################
 # do =>

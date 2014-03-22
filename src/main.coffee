@@ -6,6 +6,7 @@
 TYPES                     = require 'coffeenode-types'
 TRM                       = require 'coffeenode-trm'
 rpr                       = TRM.rpr.bind TRM
+log                       = TRM.log.bind TRM
 #...........................................................................................................
 character_sets_and_ranges = require './character-sets-and-ranges'
 @_names_and_ranges_by_csg = character_sets_and_ranges[ 'names-and-ranges-by-csg' ]
@@ -46,7 +47,7 @@ binary_interval_search    = require './binary-interval-search'
   ###
   R           = []
   return R if text.length is 0
-  last_csg    = null
+  last_csg    = 'u'
   last_rsg    = null
   chrs        = []
   #.........................................................................................................
@@ -181,7 +182,7 @@ binary_interval_search    = require './binary-interval-search'
     ncr         = @_as_xncr 'u', cid
   #.........................................................................................................
   R =
-    '~isa':     'CHR/chr-description'
+    '~isa':     'CHR/info'
     'chr':      chr
     'csg':      csg
     'cid':      cid
@@ -192,6 +193,11 @@ binary_interval_search    = require './binary-interval-search'
     'rsg':      @_as_rsg   csg, cid
   #.........................................................................................................
   return R
+
+#-----------------------------------------------------------------------------------------------------------
+@_as_chr = ( csg, cid ) ->
+  return @_unicode_chr_from_cid cid if csg is 'u'
+  retrun ( @_analyze csg, cid )[ 'chr' ]
 
 #-----------------------------------------------------------------------------------------------------------
 @_unicode_chr_from_cid = ( cid ) ->
@@ -342,8 +348,9 @@ decG                      = ( /// (?:    ([      0-9]+)      ) /// ).source
 #-----------------------------------------------------------------------------------------------------------
 @validate_is_cid = ( x ) ->
   TYPES.validate_isa_number x
-  if x < 0 or x > 0x10ffff or ( parseInt x ) != x
-    throw new Error "expected an integer between 0x0 and 0x10ffff, got #{x}"
+  # if x < 0 or x > 0x10ffff or ( parseInt x ) != x
+  if x < 0 or x > 0xffffffff or ( parseInt x ) != x
+    throw new Error "expected an integer between 0x0 and 0x10ffff, got 0x#{x.toString 16}"
   return null
 
 

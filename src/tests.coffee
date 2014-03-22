@@ -175,7 +175,7 @@ assert.strictEqual ( CHR.as_range_name '&jzr#xe100;',  input: 'xncr' ), 'Jizura 
 assert.strictEqual ( CHR.as_rsg        '&#xe100;',     input: 'xncr' ), 'u-pua'
 assert.strictEqual ( CHR.as_rsg        '&jzr#xe100;',  input: 'xncr' ), 'jzr-fig'
 
-assert.throws ( -> CHR.as_rsg        '&unknown#xe100;',  input: 'xncr' ), "Error: unknown CSG: 'unknown'"
+assert.throws ( -> CHR.as_rsg        '&unknown#xe100;',  input: 'xncr' ), /Error: unknown CSG: 'unknown'/
 assert.strictEqual ( CHR.as_rsg      '&jzr#xe100;',  input:  'xncr', csg: 'u'   ), 'u-pua'
 assert.strictEqual ( CHR.as_rsg      '&#xe100;',     input:  'xncr', csg: 'u'   ), 'u-pua'
 assert.strictEqual ( CHR.as_rsg      '&#xe100;',     input:  'xncr', csg: 'jzr' ), 'jzr-fig'
@@ -201,7 +201,7 @@ assert.deepEqual ( CHR.analyze '&jzr#x24563;', input: 'ncr'   ), {'~isa':     'C
 assert.deepEqual ( CHR.analyze '&jzr#x24563;', input: 'xncr'  ), {'~isa':     'CHR/chr-description',"chr":"&jzr#x24563;","csg":"jzr","cid":148835,"fncr":"jzr-24563","sfncr":"jzr-24563","ncr":"&#x24563;","xncr":"&jzr#x24563;","rsg":null}
 
 
-assert.throws ( -> CHR.chunks_from_text 'ab&jzr#xe063;d', input: 'xncr', output: 'xxx' ), "Error: unknown output mode: 'xxx'"
+assert.throws ( -> CHR.chunks_from_text 'ab&jzr#xe063;d', input: 'xncr', output: 'xxx' ), /Error: unknown output mode: 'xxx'/
 assert.deepEqual ( CHR.chunks_from_text 'helo wörld'                                     ), [{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"helo w"},{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn-1","text":"ö"},{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"rld"}]
 assert.deepEqual ( CHR.chunks_from_text '種果〇𤕣カタカナ'                                       ), [{"~isa":"CHR/chunk","csg":"u","rsg":"u-cjk","text":"種果"},{"~isa":"CHR/chunk","csg":"u","rsg":"u-cjk-sym","text":"〇"},{"~isa":"CHR/chunk","csg":"u","rsg":"u-cjk-xb","text":"𤕣"},{"~isa":"CHR/chunk","csg":"u","rsg":"u-cjk-kata","text":"カタカナ"}]
 assert.deepEqual ( CHR.chunks_from_text 'ab&#x63;d'                                      ), [{"~isa":"CHR/chunk","csg":"u","rsg":"u-latn","text":"ab&#x63;d"}]
