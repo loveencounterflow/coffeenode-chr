@@ -197,7 +197,7 @@ binary_interval_search    = require './binary-interval-search'
 #-----------------------------------------------------------------------------------------------------------
 @_as_chr = ( csg, cid ) ->
   return @_unicode_chr_from_cid cid if csg is 'u'
-  retrun ( @_analyze csg, cid )[ 'chr' ]
+  return ( @_analyze csg, cid )[ 'chr' ]
 
 #-----------------------------------------------------------------------------------------------------------
 @_unicode_chr_from_cid = ( cid ) ->
