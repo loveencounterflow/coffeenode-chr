@@ -184,6 +184,7 @@ binary_interval_search    = require './binary-interval-search'
   R =
     '~isa':     'CHR/info'
     'chr':      chr
+    'uchr':     @_unicode_chr_from_cid cid
     'csg':      csg
     'cid':      cid
     'fncr':     @_as_fncr  csg, cid
