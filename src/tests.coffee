@@ -1,8 +1,8 @@
 
-TRM                       = require 'coffeenode-trm'
-log                       = TRM.log.bind TRM
-echo                      = TRM.echo.bind TRM
-rainbow                   = TRM.rainbow.bind TRM
+CND                       = require 'cnd'
+log                       = CND.log.bind CND
+echo                      = CND.echo.bind CND
+rainbow                   = CND.rainbow.bind CND
 CHR                       = require '../../coffeenode-chr'
 
 # log '&jzr#x123;helo'.match @xncr_kernel_matcher
