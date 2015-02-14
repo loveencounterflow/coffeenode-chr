@@ -12,9 +12,8 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "coffeenode-trm": "~0.1.6",
-    "coffee-script": "~1.7.1",
-    "coffeenode-types": "~0.1.0"
+    "cnd": "^0.1.5",
+    "coffee-script": "~1.7.1"
   },
   "main": "./lib/main",
   "engines": {

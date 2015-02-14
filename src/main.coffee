@@ -3,13 +3,22 @@
 
 
 ############################################################################################################
-TYPES                     = require 'coffeenode-types'
-TRM                       = require 'coffeenode-trm'
-rpr                       = TRM.rpr.bind TRM
-log                       = TRM.log.bind TRM
+CND                       = require 'cnd'
+rpr                       = CND.rpr.bind CND
+badge                     = 'coffeenode-chr'
+log                       = CND.get_logger 'plain',   badge
+info                      = CND.get_logger 'info',    badge
+alert                     = CND.get_logger 'alert',   badge
+debug                     = CND.get_logger 'debug',   badge
+warn                      = CND.get_logger 'warn',    badge
+urge                      = CND.get_logger 'urge',    badge
+whisper                   = CND.get_logger 'whisper', badge
+help                      = CND.get_logger 'help',    badge
+echo                      = CND.echo.bind CND
 #...........................................................................................................
 character_sets_and_ranges = require './character-sets-and-ranges'
 @_names_and_ranges_by_csg = character_sets_and_ranges[ 'names-and-ranges-by-csg' ]
+@_ranges_by_rsg           = character_sets_and_ranges[ 'ranges-by-rsg' ]
 binary_interval_search    = require './binary-interval-search'
 
 
@@ -162,6 +171,7 @@ binary_interval_search    = require './binary-interval-search'
 @as_cid         = ( cid_hint, O ) -> return ( @_csg_cid_from_hint cid_hint, O )[ 1 ]
 #...........................................................................................................
 @as_chr         = ( cid_hint, O ) -> return @_as_chr.apply        @, @_csg_cid_from_hint cid_hint, O
+@as_uchr        = ( cid_hint, O ) -> return @_as_uchr.apply       @, @_csg_cid_from_hint cid_hint, O
 @as_fncr        = ( cid_hint, O ) -> return @_as_fncr.apply       @, @_csg_cid_from_hint cid_hint, O
 @as_sfncr       = ( cid_hint, O ) -> return @_as_sfncr.apply      @, @_csg_cid_from_hint cid_hint, O
 @as_xncr        = ( cid_hint, O ) -> return @_as_xncr.apply       @, @_csg_cid_from_hint cid_hint, O
@@ -199,6 +209,10 @@ binary_interval_search    = require './binary-interval-search'
 @_as_chr = ( csg, cid ) ->
   return @_unicode_chr_from_cid cid if csg is 'u'
   return ( @_analyze csg, cid )[ 'chr' ]
+
+#-----------------------------------------------------------------------------------------------------------
+@_as_uchr = ( csg, cid ) ->
+  return @_unicode_chr_from_cid cid
 
 #-----------------------------------------------------------------------------------------------------------
 @_unicode_chr_from_cid = ( cid ) ->
@@ -261,7 +275,7 @@ binary_interval_search    = require './binary-interval-search'
 
   ###
   #.........................................................................................................
-  switch type = TYPES.type_of options
+  switch type = CND.type_of options
     when 'null', 'jsundefined'
       csg_of_options  = null
       input_mode      = null
@@ -271,7 +285,7 @@ binary_interval_search    = require './binary-interval-search'
     else
       throw new Error "expected a POD as second argument, got a #{type}"
   #.........................................................................................................
-  switch type = TYPES.type_of cid_hint
+  switch type = CND.type_of cid_hint
     when 'number'
       csg_of_cid_hint = null
       cid             = cid_hint
@@ -338,17 +352,27 @@ decG                      = ( /// (?:    ([      0-9]+)      ) /// ).source
 
 
 #===========================================================================================================
+#
+#-----------------------------------------------------------------------------------------------------------
+@cid_range_from_rsg = ( rsg ) ->
+  # [ csg, ... ] = rsg.split '-'
+  unless ( R = @_ranges_by_rsg[ rsg ] )?
+    throw new Error "unknown RSG: #{rpr rsg}"
+  return R
+
+
+#===========================================================================================================
 # VALIDATION
 #-----------------------------------------------------------------------------------------------------------
 @validate_is_csg = ( x ) ->
-  TYPES.validate_isa_text x
+  CND.validate_isa_text x
   throw new Error "not a valid CSG: #{rpr x}" unless ( x.match @_csg_matcher )?
   throw new Error "unknown CSG: #{rpr x}"     unless @_names_and_ranges_by_csg[ x ]?
   return null
 
 #-----------------------------------------------------------------------------------------------------------
 @validate_is_cid = ( x ) ->
-  TYPES.validate_isa_number x
+  CND.validate_isa_number x
   # if x < 0 or x > 0x10ffff or ( parseInt x ) != x
   if x < 0 or x > 0xffffffff or ( parseInt x ) != x
     throw new Error "expected an integer between 0x0 and 0x10ffff, got 0x#{x.toString 16}"

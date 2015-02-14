@@ -370,6 +370,7 @@ a hyphen, as in `u-latn-b` standing for Unicode range `Latin Extended-B`.
 
 ############################################################################################################
 do =>
+  @[ 'ranges-by-rsg' ] = ranges_by_rsg = {}
   for csg, names_and_ranges of @[ 'names-and-ranges-by-csg' ]
     # TRM.log csg
     for name_and_range, idx in names_and_ranges
@@ -377,7 +378,7 @@ do =>
         rsg
         first_cid
         last_cid ] = name_and_range
-      # TRM.log idx, names_and_ranges[ idx ]
+      ranges_by_rsg[ rsg ]    = [ first_cid, last_cid, ]
       names_and_ranges[ idx ] =
         'range-name':   range_name
         'rsg':          rsg
