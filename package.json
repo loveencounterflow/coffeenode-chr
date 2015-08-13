@@ -12,8 +12,7 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "cnd": "^0.1.5",
-    "coffee-script": "~1.7.1"
+    "cnd": "^1.0.8"
   },
   "main": "./lib/main",
   "engines": {
