@@ -396,6 +396,12 @@ test                      = require 'guy-test'
 @[ 'test # 125' ] = ( T ) ->
   T.eq ( CHR.html_from_text 'helo wörld'                         ), """<span class="u-latn">helo w</span><span class="u-latn-1">ö</span><span class="u-latn">rld</span>"""
 
+@[ 'test Unicode 8 / CJK Extension E' ] = ( T ) ->
+  T.eq ( CHR.as_csg '𫠠' ), 'u'
+  T.eq ( CHR.as_rsg '𫠠' ), 'u-cjk-xe'
+  T.eq ( CHR.as_fncr '𫠠' ), 'u-cjk-xe-2b820'
+
+
 # assert.throws ( -> CHR._chr_csg_cid_from_chr '𤕣'[ 0 ] ),        /^Error: illegal character sequence/
 # assert.throws ( -> CHR._chr_csg_cid_from_chr '𤕣'[ 0 ] + 'x' ),  /^Error: illegal character sequence/
 # assert.throws ( -> CHR.as_rsg        '&unknown#xe100;',  input: 'xncr' ), /Error: unknown CSG: 'unknown'/

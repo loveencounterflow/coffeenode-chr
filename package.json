@@ -26,7 +26,7 @@
   },
   "scripts": {
     "build": "gulp --harmony build",
-    "test": "npm run build && node ./lib/tests.js"
+    "test": "npm run build && gulp --harmony test"
   },
   "bugs": {
     "url": "https://github.com/loveencounterflow/coffeenode-chr/issues"
