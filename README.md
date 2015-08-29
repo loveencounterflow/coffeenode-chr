@@ -1,4 +1,46 @@
 
+
+- [Front matter](#front-matter)
+	- [Installation](#installation)
+- [API](#api)
+	- [Overview](#overview)
+	- [Public Members](#public-members)
+		- [`analyze = ( cid_hint, options ) ->`](#analyze-=--cid_hint-options--->)
+		- [`as_chr = ( cid_hint, options ) ->`](#as_chr-=--cid_hint-options--->)
+		- [`as_cid = ( cid_hint, options ) ->`](#as_cid-=--cid_hint-options--->)
+		- [`as_csg = ( cid_hint, options ) ->`](#as_csg-=--cid_hint-options--->)
+		- [`as_fncr = ( cid_hint, options ) ->`](#as_fncr-=--cid_hint-options--->)
+		- [`as_ncr = ( cid_hint, options ) ->`](#as_ncr-=--cid_hint-options--->)
+		- [`as_range_name = ( cid_hint, options ) ->`](#as_range_name-=--cid_hint-options--->)
+		- [`as_rsg = ( cid_hint, options ) ->`](#as_rsg-=--cid_hint-options--->)
+		- [`as_sfncr = ( cid_hint, options ) ->`](#as_sfncr-=--cid_hint-options--->)
+		- [`as_xncr = ( cid_hint, options ) ->`](#as_xncr-=--cid_hint-options--->)
+		- [`chrs_from_text = ( text, options ) ->`](#chrs_from_text-=--text-options--->)
+		- [`chunks_from_text = ( text, options ) ->`](#chunks_from_text-=--text-options--->)
+		- [`html_from_text = ( text, options ) ->`](#html_from_text-=--text-options--->)
+		- [`cid_from_chr = ( chr, options ) ->`](#cid_from_chr-=--chr-options--->)
+		- [`csg_cid_from_chr = ( chr, options ) ->`](#csg_cid_from_chr-=--chr-options--->)
+		- [`validate_is_cid = ( x ) ->`](#validate_is_cid-=--x--->)
+		- [`validate_is_csg = ( x ) ->`](#validate_is_csg-=--x--->)
+	- [Private Members](#private-members)
+- [Background](#background)
+	- [JavaScript & Unicode](#javascript-&-unicode)
+	- [UTF-8 & CESU-8](#utf-8-&-cesu-8)
+- [Glossary](#glossary)
+	- [Character Representations](#character-representations)
+		- [Numeric Character Representation (NCR)](#numeric-character-representation-ncr)
+		- [Unicode Character Representation (UCR)](#unicode-character-representation-ucr)
+		- [Friendly NCRs](#friendly-ncrs)
+		- [Extended NCRs](#extended-ncrs)
+	- [Other Terms](#other-terms)
+		- [Character Identifier (CID)](#character-identifier-cid)
+		- [Codepoint (Codeposition)](#codepoint-codeposition)
+		- [Codeunit](#codeunit)
+		- [Character Set Sigil (CSG)](#character-set-sigil-csg)
+
+> **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+
 # Front matter
 
 The CoffeeNode `CHR` module (short for 'character') is a library for handling characters within NodeJS in a
