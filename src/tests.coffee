@@ -405,6 +405,10 @@ test                      = require 'guy-test'
 # assert.throws ( -> CHR.cid_from_chr '', 'ncr' ), /^Error: unable to obtain CID from empty string$/
 # assert.throws ( -> CHR.cid_from_chr '', 'xncr' ), /^Error: unable to obtain CID from empty string$/
 
+@_main = test @
+
 unless module.parent?
-  test @
+  @_main()
+
+
 
