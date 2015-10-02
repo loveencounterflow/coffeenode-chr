@@ -32,6 +32,7 @@
     "url": "https://github.com/loveencounterflow/coffeenode-chr/issues"
   },
   "_id": "coffeenode-chr@0.1.1",
+  "license": "MIT",
   "readmeFilename": "README.md",
-  "readme": "ERROR: No README data found!"
+  "readme": "A UCS-2-aware library for the representation & transformation of Unicode characters & codepoints."
 }
