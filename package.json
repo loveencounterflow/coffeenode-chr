@@ -1,6 +1,6 @@
 {
   "name": "coffeenode-chr",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A UCS-2-aware library for the representation & transformation of Unicode characters & codepoints.",
   "author": {
     "name": "loveencounterflow",
