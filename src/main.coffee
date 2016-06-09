@@ -19,7 +19,7 @@ echo                      = CND.echo.bind CND
 character_sets_and_ranges = require './character-sets-and-ranges'
 @_names_and_ranges_by_csg = character_sets_and_ranges[ 'names-and-ranges-by-csg' ]
 @_ranges_by_rsg           = character_sets_and_ranges[ 'ranges-by-rsg' ]
-# binary_interval_search    = require './binary-interval-search'
+binary_interval_search    = require './binary-interval-search'
 
 
 
