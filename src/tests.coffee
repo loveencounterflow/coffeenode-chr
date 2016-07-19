@@ -415,5 +415,24 @@ test                      = require 'guy-test'
 @_main = ->
   test @, 'timeout': 2500
 
+###
 
+Reported usages of API
+
+CHR.chrs_from_text        40
+CHR.is_inner_glyph        20
+CHR.as_uchr               12
+CHR.as_fncr                9
+CHR.jzr_as_uchr            9
+CHR.as_rsg                 8
+CHR.as_chr                 8
+CHR.as_cid                 6
+CHR.normalize_to_pua       5
+CHR.analyze                5
+CHR.as_csg                 3
+CHR.chr_from_cid_and_csg   3
+CHR._as_chr                1
+CHR.as_sfncr               1
+
+###
 
