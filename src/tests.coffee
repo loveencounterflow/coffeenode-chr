@@ -384,8 +384,9 @@ test                      = require 'guy-test'
 @[ 'test # 121' ] = ( T ) ->
   T.eq ( CHR.cid_from_chr 'x',          input: 'xncr', ), 120
 
-@[ 'test # 122' ] = ( T ) ->
-  T.eq ( CHR.html_from_text '&jzr#xe101; & you', input: 'xncr'   ), """<span class="jzr-fig">&#xe101;</span><span class="u-latn"> &amp; you</span>"""
+
+@[ 'test # 123' ] = ( T ) ->
+  T.eq ( CHR.html_from_text 'helo &#x24563; wörld'               ), """<span class="u-latn">helo &amp;#x24563; w</span><span class="u-latn-1">ö</span><span class="u-latn">rld</span>"""
 
 @[ 'test # 123' ] = ( T ) ->
   T.eq ( CHR.html_from_text 'helo &#x24563; wörld'               ), """<span class="u-latn">helo &amp;#x24563; w</span><span class="u-latn-1">ö</span><span class="u-latn">rld</span>"""
@@ -401,6 +402,16 @@ test                      = require 'guy-test'
   T.eq ( CHR.as_rsg '𫠠' ), 'u-cjk-xe'
   T.eq ( CHR.as_fncr '𫠠' ), 'u-cjk-xe-2b820'
 
+#-----------------------------------------------------------------------------------------------------------
+@[ 'test backslash-escaping' ] = ( T ) ->
+  #.........................................................................................................
+  T.eq ( CHR.html_from_text '\\&jzr#xe101; & you', input: 'xncr'   ),
+    """<span class="u-latn">\\&amp;jzr#xe101; &amp; you</span>"""
+  T.eq ( CHR.as_cid      '\\&jzr#xe100;',  input: 'xncr'              ), 92
+  # T.eq ( ( '\\&#123;helo'.match     CHR._first_chr_matcher_ncr  ) ), null
+  # T.eq ( ( '\\&#x123;helo'.match    CHR._first_chr_matcher_xncr ) ), null
+  #.........................................................................................................
+  return null
 
 # assert.throws ( -> CHR._chr_csg_cid_from_chr '𤕣'[ 0 ] ),        /^Error: illegal character sequence/
 # assert.throws ( -> CHR._chr_csg_cid_from_chr '𤕣'[ 0 ] + 'x' ),  /^Error: illegal character sequence/
@@ -415,6 +426,7 @@ test                      = require 'guy-test'
 unless module.parent?
   test @, 'timeout': 2500
   # test @[ 'test Unicode 8 / CJK Extension E' ]
+  # test @[ 'test backslash-escaping' ]
 
 ###
 

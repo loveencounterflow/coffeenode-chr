@@ -322,10 +322,10 @@ dec                       = ( /// (?:     [      0-9]+       ) /// ).source
 decG                      = ( /// (?:    ([      0-9]+)      ) /// ).source
 #...........................................................................................................
 @_csg_matcher             = /// ^ #{name} $ ///
-@_ncr_matcher             = /// (?: &           \# (?: #{hex}  | #{dec}  ) ; ) ///
-@_xncr_matcher            = /// (?: & #{nameO}  \# (?: #{hex}  | #{dec}  ) ; ) ///
-@_ncr_csg_cid_matcher     = /// (?: & ()        \# (?: #{hexG} | #{decG} ) ; ) ///
-@_xncr_csg_cid_matcher    = /// (?: & #{nameOG} \# (?: #{hexG} | #{decG} ) ; ) ///
+@_ncr_matcher             = /// (?: (?<! \\ ) &           \# (?: #{hex}  | #{dec}  ) ; ) ///
+@_xncr_matcher            = /// (?: (?<! \\ ) & #{nameO}  \# (?: #{hex}  | #{dec}  ) ; ) ///
+@_ncr_csg_cid_matcher     = /// (?: (?<! \\ ) & ()        \# (?: #{hexG} | #{decG} ) ; ) ///
+@_xncr_csg_cid_matcher    = /// (?: (?<! \\ ) & #{nameOG} \# (?: #{hexG} | #{decG} ) ; ) ///
 #...........................................................................................................
 ### Matchers for surrogate sequences and non-surrogate, 'ordinary' characters: ###
 @_surrogate_matcher       = /// (?: [  \ud800-\udbff ] [ \udc00-\udfff ] ) ///
