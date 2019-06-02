@@ -14,7 +14,7 @@
     "guy-test": "^1.0.5"
   },
   "dependencies": {
-    "cnd": "^3.0.4"
+    "cnd": "^4.6.0"
   },
   "main": "./lib/main",
   "engines": {
