@@ -276,14 +276,14 @@ binary_interval_search    = require './binary-interval-search'
   ###
   #.........................................................................................................
   switch type = CND.type_of options
-    when 'null', 'jsundefined'
+    when 'null', 'jsundefined', 'undefined'
       csg_of_options  = null
       input_mode      = null
     when 'pod'
       csg_of_options  = options[ 'csg' ]
       input_mode      = options[ 'input' ]
     else
-      throw new Error "expected a POD as second argument, got a #{type}"
+      throw new Error "µ88763 expected a POD as second argument, got a #{type}"
   #.........................................................................................................
   switch type = CND.type_of cid_hint
     when 'number'
